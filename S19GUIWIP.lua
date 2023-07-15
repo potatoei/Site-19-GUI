@@ -1,156 +1,213 @@
-if not game.PlaceId == 1440936008 and ALPHA_LOADED and not _G.GUILoaded then
-    return
-end
-
-pcall(function() getgenv().ALPHA_LOADED = true end)
-
-
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/forumsLib/main/source.lua"))()
-local main = Library:NewSection("Loadouts")
-local main1 = Library:NewSection("SWAT ig")
-local subs = Library:NewSection("Vision, Misc.")
+local Forums = Library.new("SCP Site-19 Roleplay GUI made by Jaystation/Opulent")
+local M16 = Forums:NewSection("M16")
+local KV = Forums:NewSection("Kriss Vector")
+local proj = Forums:NewSection("P90")
+local G22 = Forums:NewSection("Glock 22")
+local shield = Forums:NewSection("Riot Shields")
+local keycha = Forums:NewSection("Keychains")
+local keyca = Forums:NewSection("Keycards")
+local med = Forums:NewSection("Medkits")
+local brush = Forums:NewSection("Brushes")
+local vest = Forums:NewSection("Vests")
+local wrench = Forums:NewSection("Wrench")
+local knives = Forums:NewSection("Knives")
+
+
 local speaker = game.Players.LocalPlayer
-local picks = workspace.Ignore.Pickups
-function clickMiddleScreen()
-    local userInputService = game:GetService("UserInputService")
-    local mouse = game.Players.LocalPlayer:GetMouse()
-    local screenWidth = game:GetService("Workspace").CurrentCamera.ViewportSize.X
-    local screenHeight = game:GetService("Workspace").CurrentCamera.ViewportSize.Y
-    local middlePosition = Vector2.new(screenWidth / 2, screenHeight / 2)
-    userInputService.MouseBehavior = Enum.MouseBehavior.Default
-    mouse.X = middlePosition.X
-    mouse.Y = middlePosition.Y
-    userInputService:ClickMouse()
-    userInputService.MouseBehavior = Enum.MouseBehavior.LockCenter
-    mouse.X = screenWidth / 2
-    mouse.Y = screenHeight / 2
-end
+local speakercf = speaker.Character.HumanoidRootPart.CFrame
 
-main1:NewButton("SD SWAT Position", function()
-    local riotShield = speaker:FindFirstChild("Riot Shield")
-    local p90 = speaker:FindFirstChild("P90")
-    
-    if riotShield and p90 then
-        riotShield.Parent = speaker.Character
-        p90.Parent = speaker.Character
-    else
-        notify("You don't have the Riot Shield and/or P90!")
-    end
+
+M16:NewButton("Pickup1", function()
+    speakercf = workspace.Ignore.Pickups.M16:GetChildren()[4].CFrame
+end)
+M16:NewButton("Pickup2", function()
+    speakercf = workspace.Ignore.Pickups.M16.Pickup.CFrame
+end)
+M16:NewButton("Pickup3", function()
+    speakercf = workspace.Ignore.Pickups.M16:GetChildren()[2].CFrame
+end)
+M16:NewButton("Pickup4", function()
+    speakercf = workspace.Ignore.Pickups.M16:GetChildren()[3].CFrame
 end)
 
-main:NewButton("MTF Loadout", function()
-    local krissVector = workspace.Ignore.Pickups:FindFirstChild("Kriss Vector")
-    local glock22 = workspace.Ignore.Pickups:FindFirstChild("Glock22")
-    local level3Card = workspace.Ignore.Pickups:FindFirstChild("Level-3 Card")
-    
-    if krissVector and krissVector:IsA("Folder") then
-        for _, part in ipairs(krissVector:GetDescendants()) do
-            if part:IsA("Part") and part.Config and part.Config:FindFirstChild("Alive") and part.Config.Alive.Value then
-                local pickupPart = part:FindFirstChild("Pickup")
-                if pickupPart and pickupPart:IsA("Part") then
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = pickupPart.CFrame
-                    task.wait()
-                    clickMiddleScreen()
-                    break
-                end
-            end
-        end
-    end
-    
-    if glock22 and glock22:IsA("Part") and glock22.Config and glock22.Config:FindFirstChild("Alive") and glock22.Config.Alive.Value then
-        local glock22PickupPart = glock22:FindFirstChild("Pickup")
-        if glock22PickupPart and glock22PickupPart:IsA("Part") then
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = glock22PickupPart.CFrame
-            task.wait()
-            clickMiddleScreen()
-        end
-    end
-    
-    if level3Card and level3Card:IsA("Part") and level3Card.Config and level3Card.Config:FindFirstChild("Alive") and level3Card.Config.Alive.Value then
-        local level3CardPickupPart = level3Card:FindFirstChild("Pickup")
-        if level3CardPickupPart and level3CardPickupPart:IsA("Part") then
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = level3CardPickupPart.CFrame
-            task.wait()
-            clickMiddleScreen()
-        end
-    end
+KV:NewButton("Pickup1", function()
+    speakercf = workspace.Ignore.Pickups["Kriss Vector"]:GetChildren()[3].CFrame
+end)
+KV:NewButton("Pickup2", function()
+    speakercf = workspace.Ignore.Pickups["Kriss Vector"].Pickup.CFrame
+end)
+KV:NewButton("Pickup3", function()
+    speakercf = workspace.Ignore.Pickups["Kriss Vector"]:GetChildren()[2].CFrame
 end)
 
-main:NewButton("SD Loadout w/ Shield", function()
-    local P90 = picks:FindFirstChild("P90")
-    local R = picks:FindFirstChild("Riot Shield")
-    local Rad = picks:FindFirstChild("Radio")
-    
-    for i, v in pairs(GetDescendants(P90)) do
-        if v.Name == "Pickup" then
-            local P90PickupPart = v
-            if P90PickupPart and P90PickupPart:IsA("Part") then
-                local config = P90PickupPart:FindFirstChild("Config")
-                if config and config:FindFirstChild("Alive") and config.Alive.Value == true then
-                    speaker.Character.HumanoidRootPart.CFrame = P90PickupPart.CFrame
-                    task.wait()
-                    clickMiddleScreen()
-                end
-            end
-        end
-    end
+shield:NewButton("Pickup1", function()
+    speakercf = workspace.Ignore.Pickups.Shield:GetChildren()[7].CFrame
+end)
+shield:NewButton("Pickup2", function()
+    speakercf = workspace.Ignore.Pickups.Shield.Pickup.CFrame
+end)
+shield:NewButton("Pickup3", function()
+    speakercf = workspace.Ignore.Pickups.Shield:GetChildren()[4].CFrame
+end)
+shield:NewButton("Pickup4", function()
+    speakercf = workspace.Ignore.Pickups.Shield:GetChildren()[2].CFrame
+end)
+shield:NewButton("Pickup5", function()
+    speakercf = workspace.Ignore.Pickups.Shield:GetChildren()[5].CFrame
+end)
+shield:NewButton("Pickup6", function()
+    speakercf = workspace.Ignore.Pickups.Shield:GetChildren()[6].CFrame
+end)
+shield:NewButton("Pickup7", function()
+    speakercf = workspace.Ignore.Pickups.Shield:GetChildren()[3].CFrame
+end)
 
-    for i, v in pairs(GetDescendants(R)) do
-        if v.Name == "Pickup" and v:IsA("Part") then
-            local findr = v
-            local config2 = findr:FindFirstChild("Config")
-            if config2 and config2:FindFirstChild("Alive") and config.Alive.Value == true then
-                speaker.Character.HumanoidRootPart.CFrame = findr.CFrame
-                task.wait()
-                clickMiddleScreen()
-            end
-        end
-    end    
+keycha:NewButton("Pi1", function()
+    speakercf = workspace.Ignore.Pickups.Keychains:GetChildren()[7].CFrame
+end)
+keycha:NewButton("Pi2", function()
+    speakercf = workspace.Ignore.Pickups.Keychains.Pickup.CFrame
+end)
+keycha:NewButton("Pi3", function()
+    speakercf = workspace.Ignore.Pickups.Keychains:GetChildren()[4].CFrame
+end)
+keycha:NewButton("Pi4", function()
+    speakercf = workspace.Ignore.Pickups.Keychains:GetChildren()[2].CFrame
+end)
+keycha:NewButton("P5", function()
+    speakercf = workspace.Ignore.Pickups.Keychains:GetChildren()[5].CFrame
+end)
+keycha:NewButton("Pi6", function()
+    speakercf = workspace.Ignore.Pickups.Keychains:GetChildren()[6].CFrame
+end)
+keycha:NewButton("Pi7", function()
+    speakercf = workspace.Ignore.Pickups.Keychains:GetChildren()[3].CFrame
+end)
 
-    for i, v in pairs(GetDescendants(Rad)) do
-        if v.Name == "Pickup" then
-            local rapick = v 
-            if rapick and rapick:IsA("Part") then
-                local config3 = rapick:FindFirstChild("Config")
-                if config3 and config3:FindFirstChild("Alive") and config.Alive.Value == true then
-                    speaker.Character.HumanoidRootPart.CFrame = rapick.CFrame
-                    task.wait()
-                    clickMiddleScreen()
-                end
-            end
-        end
-    end
+keyca:NewButton("L-3", function()
+    speakercf = workspace.Ignore.Pickups.Keycards:GetChildren()[7].CFrame
+end)
+
+keyca:NewButton("L-3", function()
+    speakercf = workspace.Ignore.Pickups.Keycards:GetChildren()[4].CFrame
+end)
+
+keyca:Seperator()
+
+keyca:NewButton("L-2", function()
+    speakercf = workspace.Ignore.Pickups.Keycards:GetChildren()[5].CFrame
+end)
+
+keyca:NewButton("L-2", function()
+    speakercf = workspace.Ignore.Pickups.Keycards:GetChildren()[5].CFrame
+end)
+
+keyca:Seperator()
+
+keyca:NewButton("L-1", function()
+    speakercf = workspace.Ignore.Pickups.Keycards:GetChildren()[3].CFrame
+end)
+
+keyca:NewButton("L-1", function()
+    speakercf = workspace.Ignore.Pickups.Keycards.Pickup.CFrame
+end)
+
+keyca:NewButton("L-1", function()
+    speakercf = workspace.Ignore.Pickups.Keycards:GetChildren()[2].CFrame
+end)
+--------------------------------------------------------------------------
+
+
+med:Seperator()
+
+med:NewButton('Pi', function()
+    speakercf = workspace.Ignore.Pickups.Medkit:GetChildren()[8].CFrame
+end)
+
+med:NewButton('Pi', function()
+    speakercf = workspace.Ignore.Pickups.Medkit.Pickup.CFrame
+end)
+
+med:NewButton('Pi', function()
+    speakercf = workspace.Ignore.Pickups.Medkit:GetChildren()[4].CFrame
+end)
+
+med:NewButton('Pi', function()
+    speakercf = workspace.Ignore.Pickups.Medkit:GetChildren()[2].CFrame
+end)
+
+med:NewButton('Pi', function()
+    speakercf = workspace.Ignore.Pickups.Medkit:GetChildren()[6].CFrame 
+end)
+
+med:NewButton('Pi', function()
+    speakercf = workspace.Ignore.Pickups.Medkit:GetChildren()[2].CFrame
+end)
+
+med:NewButton('Pi', function()
+    speakercfc = workspace.Ignore.Pickups.Medkit:GetChildren()[5].CFrame
+end)
+
+med:NewButton('Pi', function()
+    speakercf = workspace.Ignore.Pickups.Medkit:GetChildren()[7].CFrame
+end)
+
+med:NewButton('Pi', function()
+    speakercf = workspace.Ignore.Pickups.Medkit:GetChildren()[3].CFrame
+end)
+
+med:Seperator()
+
+proj:NewButton('Pickup', function()
+    speakercf = workspace.Ignore.Pickups.P90.Pickup.CFrame
+end)
+
+proj:NewButton('Pickup', function()
+    speakercf = workspace.Ignore.Pickups.P90:GetChildren()[2].CFrame
+end)
+
+proj:NewButton('Pickup', function()
+    speakercf = workspace.Ignore.Pickups.P90:GetChildren()[11].CFrame
+end)
+
+proj:NewButton('Pickup', function()
+    speakercf = workspace.Ignore.Pickups.P90:GetChildren()[19].CFrame
+end)
+
+proj:NewButton('Pickup', function()
+    speakercf = workspace.Ignore.Pickups.P90:GetChildren()[18].CFrame
+end)
+
+proj:NewButton('Pickup', function()
+    speakercf = workspace.Ignore.Pickups.P90:GetChildren()[16].CFrame
+end)
+
+proj:NewButton('Pickup', function()
+    speakercf = workspace.Ignore.Pickups.P90:GetChildren()[17].CFrame
 end)
 
 
--- nightvision status toggle
-local toggle = subs:NewToggle("Night Vision: ", function(status)
-    local nightVisionEnabled = status
-    local lighting = game:GetService("Lighting")
-    local nightVision = lighting.NightVision
-    nightVision.Enabled = nightVisionEnabled
+G22:NewButton('Pickup', function()
+    speakercf = workspace.Ignore.Pickups.Glock22:GetChildren()[5].CFrame
 end)
 
-coroutine.wrap(function()
-    while wait() do
-        toggle:Update("Night Vision: "..tostring(nightVisionEnabled))
-    end
-end)()
+G22:NewButton('Pickup', function()
+    speakercf = workspace.Ignore.Pickups.Glock22:GetChildren()[4].CFrame
+end)
 
-local userInputService = game:GetService("UserInputService")
+G22:NewButton('Pickup', function()
+    speakercf = workspace.Ignore.Pickups.Glock22:GetChildren()[3].CFrame
+end)
 
-local function toggleNightVision()
-    nightVisionEnabled = not nightVisionEnabled
-    local lighting = game:GetService("Lighting")
-    local nightVision = lighting.NightVision
-    nightVision.Enabled = nightVisionEnabled
-end
+brush:NewButton('Pickup' function()
+    speakercf = workspace.Ignore.Pickups.Brush:GetChildren()[2].CFrame
+end)
 
--- Check if the player is typing before toggling night vision
-userInputService.InputBegan:Connect(function(input, gameProcessedEvent)
-    if not gameProcessedEvent and input.KeyCode == Enum.KeyCode.N then
-        if not userInputService:GetFocusedTextBox() then
-            toggleNightVision()
-        end
-    end
+knives:NewButton('Pickup', function()
+    speakercf = workspace.Ignore.Pickups.Knives:GetChildren()[2].CFrame
+end)
+
+knives:NewButton('Pickup', function()
+    speakercf = workspace.Ignore.Pickups.Knives.Pickup.CFrame
 end)
