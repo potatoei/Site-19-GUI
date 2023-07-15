@@ -1,3 +1,22 @@
+--[[
+        Decided to revamp the whole GUI!
+        Credits to xHeptic, AdministratorGnar, Opulent/Jaystation, 
+
+]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/forumsLib/main/source.lua"))()
 local Forums = Library.new("SCP Site-19 Roleplay GUI made by Jaystation/Opulent")
 local M16 = Forums:NewSection("M16")
