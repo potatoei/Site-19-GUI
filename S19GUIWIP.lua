@@ -219,7 +219,7 @@ G22:NewButton('Pickup', function()
     speakercf = workspace.Ignore.Pickups.Glock22:GetChildren()[3].CFrame
 end)
 
-brush:NewButton('Pickup' function()
+brush:NewButton('Pickup', function()
     speakercf = workspace.Ignore.Pickups.Brush:GetChildren()[2].CFrame
 end)
 
