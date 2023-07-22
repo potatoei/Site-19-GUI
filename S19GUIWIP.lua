@@ -25,7 +25,6 @@ local vest = Forums:NewSection("Vests")
 local knives = Forums:NewSection("Knives")
 local proj = Forums:NewSection("P90")
 local KV = Forums:NewSection("Kriss Vector")
-local misc = Forums:NewSection("Miscellaneous")
 local speaker = game.Players.LocalPlayer
 local speakercf = speaker.Character.HumanoidRootPart.CFrame
 
@@ -110,7 +109,29 @@ keycha:NewButton("Pi2", function()
     workspace.Ignore.Pickups.Keychains.Pickup.CFrame = speaker.Character.HumanoidRootPart.CFrame
 end)
 
+keyca:NewButton("L-3", function()
+    workspace.Ignore.Pickups.Keycards:GetChildren()[2] = speaker.Character.HumanoidRootPart.CFrame
+end)
 
+keyca:NewButton("L-3", function()
+    workspace.Ignore.Pickups.Keycards:GetChildren()[5] = speaker.Character.HumanoidRootPart.CFrame
+end)
+
+keyca:NewButton("L-2", function()
+    workspace.Ignore.Pickups.Keycards:GetChildren()[6] = speaker.Character.HumanoidRootPart.CFrame
+end)
+
+keyca:NewButton("L-2", function()
+    workspace.Ignore.Pickups.Keycards.Pickup = speaker.Character.HumanoidRootPart.CFrame
+end)
+
+keyca:NewButton("L-1", function()
+    workspace.Ignore.Pickups.Keycards:GetChildren()[7] = speaker.Character.HumanoidRootPart.CFrame
+end)
+
+keyca:NewButton("L-1", function()
+    workspace.Ignore.Pickups.Keycards:GetChildren()[3] = speaker.Character.HumanoidRootPart.CFrame
+end)
 
 med:NewButton('Pi', function()
     workspace.Ignore.Pickups.Medkit:GetChildren()[8].CFrame = speaker.Character.HumanoidRootPart.CFrame
