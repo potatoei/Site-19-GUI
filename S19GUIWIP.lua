@@ -25,6 +25,7 @@ local vest = Forums:NewSection("Vests")
 local knives = Forums:NewSection("Knives")
 local proj = Forums:NewSection("P90")
 local KV = Forums:NewSection("Kriss Vector")
+local misc = Forums:NewSection("Misc.")
 local speaker = game.Players.LocalPlayer
 local speakercf = speaker.Character.HumanoidRootPart.CFrame
 
