@@ -19,13 +19,13 @@ local med = Forums:NewSection("Medkits")
 local rad = Forums:NewSection("Radio")
 local shield = Forums:NewSection("Riot Shields")
 local keycha = Forums:NewSection("Keychains")
-local keyca = Forums:NewSection("Keycards [NOT WORKING]")
 local brush = Forums:NewSection("Brushes")
 local vest = Forums:NewSection("Vests")
 local knives = Forums:NewSection("Knives")
 local proj = Forums:NewSection("P90")
 local KV = Forums:NewSection("Kriss Vector")
 local misc = Forums:NewSection("Misc.")
+local keyca = Forums:NewSection("Keycards [NOT WORKING]")
 local speaker = game.Players.LocalPlayer
 local speakercf = speaker.Character.HumanoidRootPart.CFrame
 
