@@ -19,7 +19,7 @@ local med = Forums:NewSection("Medkits")
 local rad = Forums:NewSection("Radio")
 local shield = Forums:NewSection("Riot Shields")
 local keycha = Forums:NewSection("Keychains")
-local keyca = Forums:NewSection("Keycards")
+local keyca = Forums:NewSection("Keycards [NOT WORKING]")
 local brush = Forums:NewSection("Brushes")
 local vest = Forums:NewSection("Vests")
 local knives = Forums:NewSection("Knives")
@@ -131,7 +131,7 @@ keyca:NewButton("L-1", function()
 end)
 
 keyca:NewButton("L-1", function()
-    workspace.Ignore.Pickups.Keycards:GetChildren()[3] = speaker.Character.HumanoidRootPart.CFrame
+   workspace.Ignore.Pickups.Keycards:GetChildren()[3] = speaker.Character.HumanoidRootPart.CFrame
 end)
 
 med:NewButton('Pi', function()
