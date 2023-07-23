@@ -1,7 +1,7 @@
 --[[ 
         Hello everyone reading this, this is a Site-19 GUI, will be super private to only my exploiters friends.
         If you are an admin or mod in S-19 reading this, how the fuck did you get here?
-        Last updated 7/27/23 4:18 PM CST
+        Last updated 7/27/23 4:25 PM CST
 
 
 
@@ -30,7 +30,7 @@ function goback()
     local destinationCFrameoptions = {
         CFrame.new(480, 16, -203),
         CFrame.new(999, 999, 999),
-        CFrame.new(888, 888, 1200)
+        CFrame.new(888, 888, 1200),
         CFrame.new(5500, 555, 2332)
     }
 
