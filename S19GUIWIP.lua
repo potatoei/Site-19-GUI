@@ -357,7 +357,7 @@ end)
 
 local isFarming = false -- A flag to track whether the farming is active or not
 
-misc:NewButton('Start Healer Farm', function()
+misc:NewButton('Start Healer Farm', function() -- Might wanna incline 45 degrees to the right so you can touch as many people as possible 
     isFarming = true -- Set the flag to true to indicate that farming is active
 
     while isFarming do
