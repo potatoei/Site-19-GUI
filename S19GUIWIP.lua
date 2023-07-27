@@ -28,7 +28,7 @@ local speaker = game.Players.LocalPlayer or game.Players.LocalPlayer.Character:W
 function goback()
     local pickups = workspace.Ignore.Pickups
     local destinationCFrameoptions = {
-        CFrame.new(480, 16, -203),
+        CFrame.new(480, 18, -203), -- You might see some items when you reach the electric things behind the bars near 914/iNF Hallways, it's meant to be there
         CFrame.new(999, 999, 999),
         CFrame.new(888, 888, 1200),
         CFrame.new(5500, 555, 2332)
@@ -345,15 +345,15 @@ vest:NewButton('Pickup', function()
     goback()
 end)
 
-misc:NewButton('SWAT', function()
+misc:NewButton('SWAT', function() -- Basically gives you a shield to your front, that's it.
     for i, v in pairs(speaker:FindFirstChildOfClass("Backpack"):GetChildren()) do
-        if v:IsA("Tool") and v.Name == "M16" or v.Name == "Kriss Vector" or v.Name == "P90" or v.Name == "Glock 22" or v.Name == "Riot Shield" then
+        if v:IsA("Tool") and v.Name == "M16" or v.Name == "Kriss Vector" or v.Name == "P90" or v.Name == "Level-1" v.Name == "Level-2" or v.Name == "Level-3" or v.Name == "Level-4" or v.Name == "Riot Shield" then
             v.Parent = speaker.Character
         end
     end
 end)
 misc:Seperator()
-misc:NewButton('YOU MUST LOOPBRING ALL', function()
+misc:NewButton('YOU MUST LOOPBRING ALL', function() -- This command is for notice, does not do anything when clicked.
 end)
 
 local isFarming = false -- A flag to track whether the farming is active or not
