@@ -1,7 +1,7 @@
 --[[ 
         Hello everyone reading this, this is a Site-19 GUI, will be super private to only my exploiters friends.
         If you are an admin or mod in S-19 reading this, how the fuck did you get here?
-        Last updated 7/27/23 4:25 PM CST
+        Last updated 7/27/23
 
 
 
@@ -24,7 +24,7 @@ local knives = Forums:NewSection("Knives")
 local proj = Forums:NewSection("P90")
 local KV = Forums:NewSection("Kriss Vector")
 local misc = Forums:NewSection("Misc")
-local speaker = game.Players.LocalPlayer
+local speaker = game.Players.LocalPlayer or game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
 function goback()
     local pickups = workspace.Ignore.Pickups
     local destinationCFrameoptions = {
@@ -352,3 +352,31 @@ misc:NewButton('SWAT', function()
         end
     end
 end)
+misc:Seperator()
+misc:NewButton('YOU MUST LOOPBRING ALL', function()
+end)
+
+local isFarming = false -- A flag to track whether the farming is active or not
+
+misc:NewButton('Start Healer Farm', function()
+    isFarming = true -- Set the flag to true to indicate that farming is active
+
+    while isFarming do
+        local hf = speaker:FindFirstChildWhichIsA("Backpack"):FindFirstChild("Healer")
+
+        if hf and speaker.Team.Name == "Medical Department" and game.CoreGui:GetDescendants("CMDs") then
+            hf.Parent = speaker.Character
+            task.wait(1)
+            hf.Parent = speaker:FindFirstChildWhichIsA("Backpack")
+        else 
+            print('bruh')
+        end
+
+        task.wait(1) -- Wait for 1 second before repeating the action
+    end
+end)
+
+misc:NewButton('Stop Healer Farm', function()
+    isFarming = false -- Set the flag to false to stop the farming
+end)
+misc:Seperator()
