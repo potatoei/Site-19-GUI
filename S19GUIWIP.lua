@@ -7,6 +7,7 @@
 ]]
 
 
+
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/forumsLib/main/source.lua"))()
 local Forums = Library.new("SCP Site-19 Roleplay GUI made by Jaystation")
 local M16 = Forums:NewSection("M16")
@@ -21,6 +22,7 @@ local vest = Forums:NewSection("Vests")
 local knives = Forums:NewSection("Knives")
 local proj = Forums:NewSection("P90")
 local KV = Forums:NewSection("Kriss Vector")
+local wrench = Forums:NewSection("Wrenches")
 local misc = Forums:NewSection("Misc")
 local speaker = game.Players.LocalPlayer or game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
 function goback()
@@ -342,7 +344,13 @@ vest:NewButton('Pickup', function()
     task.wait(5)
     goback()
 end)
+wrench:NewButton('Wrench1', function()
+    workspace.Ignore.Pickups.Wrench:GetChildren()[2].CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+end)
 
+wrench:NewButton('Wrench2', function()
+    workspace.Ignore.Pickups.Wrench.Pickup.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+end)
 misc:NewButton('SWAT', function()
     -- Basically gives you a shield to your front, that's it.
     for i, v in pairs(speaker:FindFirstChildOfClass("Backpack"):GetChildren()) do
