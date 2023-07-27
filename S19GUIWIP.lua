@@ -7,7 +7,6 @@
 ]]
 
 
-
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/forumsLib/main/source.lua"))()
 local Forums = Library.new("SCP Site-19 Roleplay GUI made by Jaystation")
 local M16 = Forums:NewSection("M16")
@@ -43,7 +42,7 @@ function goback()
 end
 
 
-rad:NewButton('Radio', function()
+rad:NewButton('Radio/Medkit', function()
     workspace.Ignore.Pickups.Radio:GetChildren()[15].CFrame = speaker.Character.HumanoidRootPart.CFrame
     task.wait(5)
     goback()
@@ -146,12 +145,12 @@ keycha:NewButton("Pi7", function()
     task.wait(5)
     goback()
 end)
-keycha:NewButton("Pi6", function()
+keycha:NewButton("Pi6/L-3Keycard", function()
     workspace.Ignore.Pickups.Keychains:GetChildren()[6].CFrame = speaker.Character.HumanoidRootPart.CFrame
     task.wait(5)
     goback()
 end)
-keycha:NewButton("P5", function()
+keycha:NewButton("P5/Keycard", function()
     workspace.Ignore.Pickups.Keychains:GetChildren()[5].CFrame = speaker.Character.HumanoidRootPart.CFrame
     task.wait(5)
     goback()
@@ -344,15 +343,17 @@ vest:NewButton('Pickup', function()
     goback()
 end)
 
-misc:NewButton('SWAT', function() -- Basically gives you a shield to your front, that's it.
+misc:NewButton('SWAT', function()
+    -- Basically gives you a shield to your front, that's it.
     for i, v in pairs(speaker:FindFirstChildOfClass("Backpack"):GetChildren()) do
-        if v:IsA("Tool") and v.Name == "M16" or v.Name == "Kriss Vector" or v.Name == "P90" or v.Name == "Level-1" v.Name == "Level-2" or v.Name == "Level-3" or v.Name == "Level-4" or v.Name == "Riot Shield" then
+        if v:IsA("Tool") and (v.Name == "M16" or v.Name == "Kriss Vector" or v.Name == "P90" or v.Name == "Level-1" or v.Name == "Level-2" or v.Name == "Level-3" or v.Name == "Level-4" or v.Name == "Riot Shield") then
             v.Parent = speaker.Character
         end
     end
 end)
+
 misc:Seperator()
-misc:NewButton('YOU MUST LOOPBRING ALL', function() -- This command is for notice, does not do anything when clicked.
+misc:NewButton('You must loopbring all', function() -- This command is for notice, does not do anything when clicked.
 end)
 
 local isFarming = false -- A flag to track whether the farming is active or not
