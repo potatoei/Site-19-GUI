@@ -4653,7 +4653,7 @@ CMDs[#CMDs + 1] = {NAME = 'Truniform', DESC = 'Gives you TRU Uniform'}
 CMDs[#CMDs + 1] = {NAME = 'CDtools', DESC = 'Gives you Disguising tools'}
 CMDs[#CMDs + 1] = {NAME = 'AD / ADept', DESC = 'Makes you on The AD team'}
 CMDs[#CMDs + 1] = {NAME = 'DOADirector', DESC = 'Makes you have the DOA assistant Director outfit.'}
-CMDs[#CMDs + 1] = {NAME = 'BM9s / Beretta M9s', DESC = 'Makes you have the DOA assistant Director outfit.'}
+CMDs[#CMDs + 1] = {NAME = 'BM9s / Beretta M9s', DESC = 'Gives you Beretta M9s [ONLY ON Private Servers]'}
 CMDs[#CMDs + 1] = {NAME = 'Coffee / CMachine', DESC = 'Gets you cups S-19 ONLY'}
 CMDs[#CMDs + 1] = {NAME = 'DoctorGears', DESC = 'Doctor Gears'}
 CMDs[#CMDs + 1] = {NAME = 'RRHUniform', DESC = 'A-1'}
@@ -4661,8 +4661,9 @@ CMDs[#CMDs + 1] = {NAME = 'CadeUniform', DESC = 'Cade'}
 CMDs[#CMDs + 1] = {NAME = 'makehp', DESC = 'Makes your hp whatever you want'}
 CMDs[#CMDs + 1] = {NAME = 'notifyhp', DESC = 'Notifies your Humanoid HP'}
 CMDs[#CMDs + 1] = {NAME = 'config / configuration', DESC = 'gets your gun stat configuration'}
+CMDs[#CMDs + 1] = {NAME = 'S19GUI', DESC = 'Loads my S19GUI'}
+CMDs[#CMDs + 1] = {NAME = 'S19God', DESC = 'Gets you godmode.'}
 wait()
-
 for i = 1, #CMDs do
 	local newcmd = Example:Clone()
 	newcmd.Parent = CMDsF
@@ -12463,6 +12464,19 @@ addcmd('config', {'configuration'}, function(args, speaker)
         notify("Configuration does not exist..")
     else
         notify('Configuration not found. Restarting..')
+    end
+end)
+
+addcmd('S19GUI', {''}, function(args, speaker)
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/potatoei/Site-19-GUI/main/S19GUIWIP.lua'))()
+end)
+addcmd('S19God', {''}, function(args, speaker)
+    while true do
+        wait()
+        local character = game.Players.LocalPlayer.Character
+        if character and character:FindFirstChild("Humanoid") then
+            character.Humanoid.Health = 0
+        end
     end
 end)
 updateColors(currentShade1,shade1)
