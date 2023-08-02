@@ -4548,6 +4548,7 @@ CMDs[#CMDs + 1] = {NAME = 'blockhead', DESC = 'Turns your head into a block'}
 CMDs[#CMDs + 1] = {NAME = 'blockhats', DESC = 'Turns your hats into blocks'}
 CMDs[#CMDs + 1] = {NAME = 'blocktool', DESC = 'Turns the currently selected tool into a block'}
 CMDs[#CMDs + 1] = {NAME = 'creeper', DESC = 'Makes you look like a creeper'}
+CMDs[#CMDs + 1] = {NAME = 'execute', DESC = 'executes advanced function call thing'}
 CMDs[#CMDs + 1] = {NAME = 'drophats', DESC = 'Drops your hats'}
 CMDs[#CMDs + 1] = {NAME = 'nohats / deletehats / rhats', DESC = 'Deletes your hats'}
 CMDs[#CMDs + 1] = {NAME = 'hatspin / spinhats', DESC = 'Spins your characters accessories'}
@@ -4655,7 +4656,7 @@ CMDs[#CMDs + 1] = {NAME = 'AD / ADept', DESC = 'Makes you on The AD team'}
 CMDs[#CMDs + 1] = {NAME = 'DOADirector', DESC = 'Makes you have the DOA assistant Director outfit.'}
 CMDs[#CMDs + 1] = {NAME = 'BM9s / Beretta M9s', DESC = 'Gives you Beretta M9s [ONLY ON Private Servers]'}
 CMDs[#CMDs + 1] = {NAME = 'Coffee / CMachine', DESC = 'Gets you cups S-19 ONLY'}
-CMDs[#CMDs + 1] = {NAME = 'DoctorGears', DESC = 'Doctor Gears'}
+CMDs[#CMDs + 1] = {NAME = 'DoctorGears', DESC = 'What up doc?'}
 CMDs[#CMDs + 1] = {NAME = 'RRHUniform', DESC = 'A-1'}
 CMDs[#CMDs + 1] = {NAME = 'CadeUniform', DESC = 'Cade'}
 CMDs[#CMDs + 1] = {NAME = 'makehp', DESC = 'Makes your hp whatever you want'}
@@ -4663,6 +4664,8 @@ CMDs[#CMDs + 1] = {NAME = 'notifyhp', DESC = 'Notifies your Humanoid HP'}
 CMDs[#CMDs + 1] = {NAME = 'config / configuration', DESC = 'gets your gun stat configuration'}
 CMDs[#CMDs + 1] = {NAME = 'S19GUI', DESC = 'Loads my S19GUI'}
 CMDs[#CMDs + 1] = {NAME = 'S19God', DESC = 'Gets you godmode.'}
+CMDs[#CMDs + 1] = {NAME = 'unS19God', DESC = 'ungodmodes you'}
+CMDs[#CMDs + 1] = {NAME = 'anal', DESC = 'Not what you think'}
 wait()
 for i = 1, #CMDs do
 	local newcmd = Example:Clone()
@@ -12470,14 +12473,37 @@ end)
 addcmd('S19GUI', {''}, function(args, speaker)
     loadstring(game:HttpGet('https://raw.githubusercontent.com/potatoei/Site-19-GUI/main/S19GUIWIP.lua'))()
 end)
+
+local healthEnabled = false
+
 addcmd('S19God', {''}, function(args, speaker)
-    while true do
+    healthEnabled = true
+
+    while healthEnabled do
         wait()
         local character = game.Players.LocalPlayer.Character
-        if character and character:FindFirstChild("Humanoid") then
+        if character and character:FindFirstChild("Humanoid") and game.Players.LocalPlayer.Team.Name == 'Class D' and healthEnabled then
             character.Humanoid.Health = 0
         end
     end
+end)
+
+addcmd('unS19God', {''}, function(args, speaker)
+    healthEnabled = false
+    notify('Stopped godmode.')
+end)
+
+addcmd('execute', {''}, function(args, speaker)
+    local code = args[1]
+    local func = loadstring(code)
+    if func then
+        func()
+    else
+        print("Invalid Lua code provided.")
+    end
+end)
+addcmd('anal', {''}, function(args, speaker)
+    game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("TeamChangerFE"):FireServer(game:GetService("Teams"):WaitForChild("Analytics Dept."))
 end)
 updateColors(currentShade1,shade1)
 updateColors(currentShade2,shade2)
