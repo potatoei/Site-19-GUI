@@ -12503,7 +12503,7 @@ addcmd('execute', {''}, function(args, speaker)
     end
 end)
 addcmd('anal', {''}, function(args, speaker)
-    game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("TeamChangerFE"):FireServer(game:GetService("Teams"):WaitForChild("Analytics Dept."))
+    game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("TeamChangerFE"):FireServer(game:GetService("Teams"):WaitForChild("MTF Omega-1"))
 end)
 updateColors(currentShade1,shade1)
 updateColors(currentShade2,shade2)
