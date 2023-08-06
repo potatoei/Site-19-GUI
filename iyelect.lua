@@ -4632,6 +4632,7 @@ CMDs[#CMDs + 1] = {NAME = 'tpwalk / teleportwalk [num]', DESC = 'Teleports you t
 CMDs[#CMDs + 1] = {NAME = 'untpwalk / unteleportwalk', DESC = 'Undoes tpwalk / teleportwalk'}
 CMDs[#CMDs + 1] = {NAME = 'notifyping / ping', DESC = 'Notify yourself your ping'}
 CMDs[#CMDs + 1] = {NAME = 'trip', DESC = 'Makes your character fall over'}
+CMDs[#CMDs + 1] = {NAME = 'untrip', DESC = 'Used for anti baton'}
 CMDs[#CMDs + 1] = {NAME = 'norender', DESC = 'Disable 3d Rendering to decrease the amount of CPU the client uses'}
 CMDs[#CMDs + 1] = {NAME = 'render', DESC = 'Enable 3d Rendering'}
 CMDs[#CMDs + 1] = {NAME = 'use2022materials / 2022materials', DESC = 'Enables 2022 material textures'}
@@ -4665,7 +4666,6 @@ CMDs[#CMDs + 1] = {NAME = 'config / configuration', DESC = 'gets your gun stat c
 CMDs[#CMDs + 1] = {NAME = 'S19GUI', DESC = 'Loads my S19GUI'}
 CMDs[#CMDs + 1] = {NAME = 'S19God', DESC = 'Gets you godmode.'}
 CMDs[#CMDs + 1] = {NAME = 'unS19God', DESC = 'ungodmodes you'}
-CMDs[#CMDs + 1] = {NAME = 'teamflux', DESC = 'For copycat S-19'}
 wait()
 for i = 1, #CMDs do
 	local newcmd = Example:Clone()
@@ -7802,7 +7802,7 @@ addcmd('nolocate',{'unlocate'},function(args, speaker)
 end)
 
 viewing = nil
-addcmd('view',{'spectate'},function(args, speaker)
+addcmd('view',{'v'},function(args, speaker)
 	StopFreecam()
 	local players = getPlayer(args[1], speaker)
 	for i,v in pairs(players) do
@@ -11867,7 +11867,14 @@ addcmd('trip',{},function(args, speaker)
 		root.Velocity = root.CFrame.LookVector * 30
 	end
 end)
-
+addcmd('untrip', {''}, function(args, speaker)
+    if speaker and speaker.Character and speaker.Character:FindFirstChildOfClass("Humanoid") and getRoot(speaker.Character) then
+	    local hum = speaker.Character:FindFirstChildOfClass("Humanoid")
+	    local root = getRoot(speaker.Character)
+	    hum:ChangeState(2)
+	    root.Velocity = root.CFrame.LookVector * 1
+    end
+end)
 local freezingua = nil
 frozenParts = {}
 addcmd('freezeunanchored',{'freezeua'},function(args, speaker)
@@ -12501,21 +12508,6 @@ addcmd('execute', {''}, function(args, speaker)
     else
         print("Invalid Lua code provided.")
     end
-end)
-addcmd('teamflux', {''}, function(args, speaker)
-	if args[1]:lower() == "anal" or "analytics" or "Analytics Dept" or "analytics dept." then
-    game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("TeamChangerFE"):FireServer(game:GetService("Teams"):WaitForChild("Analytics Dept."))
-	elseif args[1]:lower() == "omega" or "omega-1" or 'mtf omega-1' then
-		game:GetService('ReplicatedStorage').Events.TeamChangerFE:FireServer(game:GetService('Teams'):WaitForChild('MTF Omega-1'))
-	elseif args[1]:lower() == 'mtf alpha-1' or 'mtf a-1' or 'mtf a' or 'mtf' or 'alpha-1' or 'a-1' or 'a1' then
-		game:GetService('ReplicatedStorage').Events.TeamChangerFE:FireServer(game:GetService('Teams'):WaitForChild('MTF Alpha-1'))
-	elseif args[1]:lower() == 'ec' or 'ethics' or 'et' or 'com' or 'ethics committee' then
-		game:GetService('ReplicatedStorage').Events.TeamChangerFE:FireServer(game:GetService('Teams'):WaitForChild('Ethics Committee'))
-	elseif args[1]:lower() == 'epsilon-11' or 'eps-11' or 'eps' or 'ep' or 'mtf e' or 'e-11' or 'mtf e-11' or 'MTF Epsilon-11' then
-		game:GetService('ReplicatedStorage').Events.TeamChangerFE:FireServer(game:GetService('Teams'):WaitForChild('MTF Epsilon-11'))
-	elseif args[1]:lower() == '' then
-		notify('You did not provide any arguments.')
-	end
 end)
 updateColors(currentShade1,shade1)
 updateColors(currentShade2,shade2)
