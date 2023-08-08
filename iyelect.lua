@@ -4431,6 +4431,7 @@ CMDs[#CMDs + 1] = {NAME = 'fireproximityprompts / firepp [name]', DESC = 'Uses a
 CMDs[#CMDs + 1] = {NAME = 'instantproximityprompts / instantpp', DESC = 'Disable the cooldown for proximity prompts'}
 CMDs[#CMDs + 1] = {NAME = 'uninstantproximityprompts / uninstantpp', DESC = 'Undo the cooldown removal'}
 CMDs[#CMDs + 1] = {NAME = 'tpunanchored / tpua [plr]', DESC = 'Teleports unanchored parts to a player'}
+CMDs[#CMDs + 1] = {NAME = 'untpunanchored / untpua [plr]', DESC = 'destroys all bodypos'}
 CMDs[#CMDs + 1] = {NAME = 'animsunanchored / freezeua', DESC = 'Freezes unanchored parts'}
 CMDs[#CMDs + 1] = {NAME = 'thawunanchored / thawua / unfreezeua', DESC = 'Thaws unanchored parts'}
 CMDs[#CMDs + 1] = {NAME = 'removeterrain / rterrain / noterrain', DESC = 'Removes all terrain'}
@@ -5229,7 +5230,7 @@ SpecialPlayerCases = {
 		end
 		return returns
 	end,
-	["cursor"] = function(speaker)
+	["x"] = function(speaker) -- cursor
 		local plrs = {}
 		local v = GetClosestPlayerFromCursor()
 		if v ~= nil then table.insert(plrs, v) end
@@ -5247,6 +5248,15 @@ SpecialPlayerCases = {
         end
 		return returns
 	end,
+    ["injured"] = function(speaker)
+        local returns = {}
+        for _, plr in pairs(Players:GetPlayers()) do
+            if plr.Character and plr.Character:FindFirstChildWhichIsA('Humanoid') and plr.Character:FindFirstChildWhichIsA('Humanoid').Health < 100 and plr.Character:FindFirstChildWhichIsA('Humanoid').Health > 0 then
+                table.insert(returns, plr)
+            end
+        end
+    return returns
+    end,
 }
 
 function toTokens(str)
@@ -11989,7 +11999,19 @@ addcmd('tpunanchored',{'tpua'},function(args, speaker)
 		notify('Incompatible Exploit','Your exploit does not support this command (missing sethiddenproperty)')
 	end
 end)
+addcmd('untpua', {'untpunanchored'}, function(args, speaker)
+    local function destroyBodyPositions(parent)
+        for _, child in ipairs(parent:GetChildren()) do
+            if child:IsA("BodyPosition") then
+                child:Destroy()
+            else
+                destroyBodyPositions(child)
+            end
+        end
+    end
 
+    destroyBodyPositions(workspace)
+end)
 keycodeMap = {
 	["0"] = 0x30,
 	["1"] = 0x31,
@@ -12506,7 +12528,7 @@ addcmd('execute', {''}, function(args, speaker)
     if func then
         func()
     else
-        print("Invalid Lua code provided.")
+        print("🤣")
     end
 end)
 updateColors(currentShade1,shade1)
