@@ -12240,7 +12240,7 @@ addcmd('GearVision',{'NightVision'},function(args, speaker)
 
     -- Check if the player is typing before toggling night vision
     userInputService.InputBegan:Connect(function(input, gameProcessedEvent)
-    if not gameProcessedEvent and input.KeyCode == Enum.KeyCode.N then
+    if not gameProcessedEvent and input.KeyCode == Enum.KeyCode.F then
         if not userInputService:GetFocusedTextBox() then
             toggleNightVision()
         end
@@ -12257,46 +12257,44 @@ end)
 
 
 addcmd('highlight', {''}, function(args, speaker)
-    if args[1] == "096" then
-        local scpsaw = workspace.SCP["096"]
-        local highlight = Instance.new("Highlight")
-        highlight.Name = "Highlight"
-        highlight.Parent = scpsaw
-    elseif args[1] == "173" then
-        local highlighter = Instance.new("Highlight")
-        highlighter.Name = "highlighter"
-        highlighter.Parent = workspace.SCP["173"]
-    elseif args[1] == "049" then
-        local highlightdupt = Instance.new("Highlight")
-        highlightdupt.Name = "highlightmsi"
-        highlightdupt.Parent = workspace.SCP["049"]
-    elseif args[1] == "106" then
-        local canwegetmuchhigher = Instance.new("Highlight")
-        canwegetmuchhigher.Name = "HighLIGHT"
-        canwegetmuchhigher.Parent = workspace.SCP["106"]
-    elseif args[1]:lower() == "all" then
-        local scpsaw = workspace.SCP["096"]
-        local highlight = Instance.new("Highlight")
-        highlight.Name = "Highlight"
-        highlight.Parent = scpsaw
+    local target = {
+        '096',
+        '049',
+        '173',
+        '106'
+    }
 
-        local highlightdupt = Instance.new("Highlight")
-        highlightdupt.Name = "highlightmsi"
-        highlightdupt.Parent = workspace.SCP["049"]
-
-        local highlighter = Instance.new("Highlight")
-        highlighter.Name = "highlighter"
-        highlighter.Parent = workspace.SCP["173"]
+    if table.find(target, args[1]) then
+        local hi = Instance.new('Highlight')
+        hi.Parent = workspace.SCP[args[1]]
         
-        local canwegetmuchhigher = Instance.new("Highlight")
-        canwegetmuchhigher.Name = "HighLIGHT"
-        canwegetmuchhigher.Parent = workspace.SCP["106"]
-
-        local highlighter = Instance.new("Highlight")
-        canwegetmuchhigher.Name = "highlighter"
-        canwegetmuchhigher.Parent = workspace.SCP["173"]
+        local colors = {
+            BrickColor.new('Bright red'),
+            BrickColor.new('Bright blue'),
+            BrickColor.new('Really black')
+        }
+        
+        local randomColor = colors[math.random(1, #colors)]
+        hi.FillColor = randomColor
+    elseif not workspace.SCP[args[1]] then
+        notify("SCP has been neutralized.")
+    elseif args[1] == 'all' or args[1] == '' then
+        for _, scp in ipairs(target) do
+            local h = Instance.new('Highlight')
+            h.Parent = workspace.SCP[scp]
+            local colors = {
+                BrickColor.new('Bright red'),
+                BrickColor.new('Bright blue'),
+                BrickColor.new('Really black')
+            }
+            local randomColor = colors[math.random(1, #colors)]
+            h.FillColor = randomColor
+        end
+    else
+        notify('Who?')
     end
 end)
+
 
 
 addcmd('destroyhighlight', {''}, function(args, speaker)
@@ -12307,35 +12305,51 @@ addcmd('destroyhighlight', {''}, function(args, speaker)
 			local scpzero = SCP:FindFirstChild("096")
 			if scpzero and scpzero.Highlight then
 				scpzero.Highlight:Destroy()
+            else
+                notify('Who?')
 			end
 		elseif args[1] == "049" then
 			if workspace.SCP["049"] and workspace.SCP["049"].highlightmsi then
 				workspace.SCP["049"].highlightmsi:Destroy()
+            else
+                notify('Who?')
 			end
 		elseif args[1] == "106" then
 			if workspace.SCP["106"] and workspace.SCP["106"].HighLIGHT then
 				workspace.SCP["106"].HighLIGHT:Destroy()
+            else
+                notify('Who?')
 			end
 		elseif args[1] == "173" then
 			if workspace.SCP["173"] and workspace.SCP["173"].highlighter then
 				workspace.SCP["173"].highlighter:Destroy()
+            else
+                notify('Who?')
 			end
 		elseif args[1]:lower() == "all" then
 			local scpzero = SCP:FindFirstChild("096")
 			if scpzero and scpzero.Highlight then
 				scpzero.Highlight:Destroy()
+            else
+                notify('Who?')
 			end
 			
 			if workspace.SCP["049"] and workspace.SCP["049"].highlightmsi then
 				workspace.SCP["049"].highlightmsi:Destroy()
+            else
+                notify('Who?')
 			end
 			
 			if workspace.SCP["106"] and workspace.SCP["106"].HighLIGHT then
 				workspace.SCP["106"].HighLIGHT:Destroy()
+            else
+                notify('Who?')
 			end
 			
 			if workspace.SCP["173"] and workspace.SCP["173"].highlighter then
 				workspace.SCP["173"].highlighter:Destroy()
+            else
+                notify('Who?')
 			end
 		end
 	end
@@ -12528,7 +12542,7 @@ addcmd('execute', {''}, function(args, speaker)
     if func then
         func()
     else
-        print("🤣")
+        print("Invalid Lua code provided.")
     end
 end)
 updateColors(currentShade1,shade1)
