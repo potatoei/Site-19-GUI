@@ -4380,9 +4380,9 @@ CMDs[#CMDs + 1] = {NAME = 'unlocate / nolocate [plr]', DESC = 'Removes locate'}
 CMDs[#CMDs + 1] = {NAME = 'xray', DESC = 'Makes all parts in workspace transparent'}
 CMDs[#CMDs + 1] = {NAME = 'unxray / noxray', DESC = 'Restores transparency'}
 CMDs[#CMDs + 1] = {NAME = '', DESC = ''}
-CMDs[#CMDs + 1] = {NAME = 'spectate / view [plr]', DESC = 'View a player'}
+CMDs[#CMDs + 1] = {NAME = 'v / view [plr]', DESC = 'View a player'}
 CMDs[#CMDs + 1] = {NAME = 'viewpart / viewp [part name]', DESC = 'View a part'}
-CMDs[#CMDs + 1] = {NAME = 'unspectate / unview', DESC = 'Stops viewing player'}
+CMDs[#CMDs + 1] = {NAME = 'uv / unview', DESC = 'Stops viewing player'}
 CMDs[#CMDs + 1] = {NAME = 'freecam / fc', DESC = 'Allows you to freely move camera around the game'}
 CMDs[#CMDs + 1] = {NAME = 'freecampos / fcpos [X Y Z]', DESC = 'Moves / opens freecam in a certain position'}
 CMDs[#CMDs + 1] = {NAME = 'freecamwaypoint / fcwp [name]', DESC = 'Moves / opens freecam to a waypoint'}
@@ -7847,7 +7847,7 @@ addcmd('viewpart',{'viewp'},function(args, speaker)
 	end
 end)
 
-addcmd('unview',{'unspectate'},function(args, speaker)
+addcmd('unview',{'uv'},function(args, speaker)
 	StopFreecam()
 	if viewing ~= nil then
 		viewing = nil
