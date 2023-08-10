@@ -4667,7 +4667,7 @@ CMDs[#CMDs + 1] = {NAME = 'config / configuration', DESC = 'gets your gun stat c
 CMDs[#CMDs + 1] = {NAME = 'S19GUI', DESC = 'Loads my S19GUI'}
 CMDs[#CMDs + 1] = {NAME = 'S19God', DESC = 'Gets you godmode.'}
 CMDs[#CMDs + 1] = {NAME = 'unS19God', DESC = 'ungodmodes you'}
-CMDs[#CMDs + 1] = {NAME = 'setgvkey / setnvkey', DESC = 'sets your NV/GV Key. Default is N'}
+CMDs[#CMDs + 1] = {NAME = 'setgvkey / setnvkey', DESC = 'sets your NV/GV Key'}
 wait()
 for i = 1, #CMDs do
 	local newcmd = Example:Clone()
@@ -12251,7 +12251,9 @@ addcmd('GearVision', {'NightVision'}, function(args, speaker)
 end)
 
 addcmd('setgvkey', {'setnvkey'}, function(args, speaker)
-    gearkey = Enum.KeyCode[args[1]]
+    local inputKey = args[1]
+    local capitalizedKey = string.upper(inputKey) -- Convert the input to uppercase
+    gearkey = Enum.KeyCode[capitalizedKey]
 end)
 
 
