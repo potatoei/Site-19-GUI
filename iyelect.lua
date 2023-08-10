@@ -232,7 +232,7 @@ Title.ZIndex = 10
 table.insert(shade1,Title)
 table.insert(text1,Title)
 
-local Titles = {"for i = 5.93, length do", "Infinite uwus", "mod admin (real)", "rwaa", "Where am I", "pwa"}
+local Titles = {"...", "Infinite uwus", "mod admin (real)", "rwaa", "Where am I", "America", "walter black", "n", "pwa", "not april fools"}
 local Images = {"11688231017", "11339922083", "11914981726", "5783845592", "6762179979", "7846015915", "11171958623", "11308149650", "7444547410", "6093472109"}
 
 Title.Text = Titles[math.random(1, #Titles)] .. " v" .. currentVersion
@@ -4380,9 +4380,9 @@ CMDs[#CMDs + 1] = {NAME = 'unlocate / nolocate [plr]', DESC = 'Removes locate'}
 CMDs[#CMDs + 1] = {NAME = 'xray', DESC = 'Makes all parts in workspace transparent'}
 CMDs[#CMDs + 1] = {NAME = 'unxray / noxray', DESC = 'Restores transparency'}
 CMDs[#CMDs + 1] = {NAME = '', DESC = ''}
-CMDs[#CMDs + 1] = {NAME = 'v / view [plr]', DESC = 'View a player'}
+CMDs[#CMDs + 1] = {NAME = 'spectate / view [plr]', DESC = 'View a player'}
 CMDs[#CMDs + 1] = {NAME = 'viewpart / viewp [part name]', DESC = 'View a part'}
-CMDs[#CMDs + 1] = {NAME = 'uv / unview', DESC = 'Stops viewing player'}
+CMDs[#CMDs + 1] = {NAME = 'unspectate / unview', DESC = 'Stops viewing player'}
 CMDs[#CMDs + 1] = {NAME = 'freecam / fc', DESC = 'Allows you to freely move camera around the game'}
 CMDs[#CMDs + 1] = {NAME = 'freecampos / fcpos [X Y Z]', DESC = 'Moves / opens freecam in a certain position'}
 CMDs[#CMDs + 1] = {NAME = 'freecamwaypoint / fcwp [name]', DESC = 'Moves / opens freecam to a waypoint'}
@@ -4667,6 +4667,7 @@ CMDs[#CMDs + 1] = {NAME = 'config / configuration', DESC = 'gets your gun stat c
 CMDs[#CMDs + 1] = {NAME = 'S19GUI', DESC = 'Loads my S19GUI'}
 CMDs[#CMDs + 1] = {NAME = 'S19God', DESC = 'Gets you godmode.'}
 CMDs[#CMDs + 1] = {NAME = 'unS19God', DESC = 'ungodmodes you'}
+CMDs[#CMDs + 1] = {NAME = 'setgvkey / setnvkey', DESC = 'sets your NV/GV Key'}
 wait()
 for i = 1, #CMDs do
 	local newcmd = Example:Clone()
@@ -7847,7 +7848,7 @@ addcmd('viewpart',{'viewp'},function(args, speaker)
 	end
 end)
 
-addcmd('unview',{'uv'},function(args, speaker)
+addcmd('unview',{'unspectate'},function(args, speaker)
 	StopFreecam()
 	if viewing ~= nil then
 		viewing = nil
@@ -12225,7 +12226,9 @@ addcmd('newesp', {''}, function(args, speaker)
 	pcall(function() loadstring(game:HttpGet('https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua'))() end)
 end)
 
-addcmd('GearVision',{'NightVision'},function(args, speaker)
+local gearkey = Enum.KeyCode.N
+
+addcmd('GearVision', {'NightVision'}, function(args, speaker)
     local nightVisionEnabled = false
     local lighting = game:GetService("Lighting")
     local nightVision = lighting.NightVision
@@ -12234,18 +12237,21 @@ addcmd('GearVision',{'NightVision'},function(args, speaker)
     local userInputService = game:GetService("UserInputService")
 
     local function toggleNightVision()
-    nightVisionEnabled = not nightVisionEnabled
-    nightVision.Enabled = nightVisionEnabled
+        nightVisionEnabled = not nightVisionEnabled
+        nightVision.Enabled = nightVisionEnabled
     end
 
-    -- Check if the player is typing before toggling night vision
     userInputService.InputBegan:Connect(function(input, gameProcessedEvent)
-    if not gameProcessedEvent and input.KeyCode == Enum.KeyCode.F then
-        if not userInputService:GetFocusedTextBox() then
-            toggleNightVision()
+        if not gameProcessedEvent and input.KeyCode == gearkey then
+            if not userInputService:GetFocusedTextBox() then
+                toggleNightVision()
+            end
         end
-    end
     end)
+end)
+
+addcmd('setgvkey', {'setnvkey'}, function(args, speaker)
+    gearkey = Enum.KeyCode[args[1]]
 end)
 
 
@@ -12257,44 +12263,46 @@ end)
 
 
 addcmd('highlight', {''}, function(args, speaker)
-    local target = {
-        '096',
-        '049',
-        '173',
-        '106'
-    }
+    if args[1] == "096" then
+        local scpsaw = workspace.SCP["096"]
+        local highlight = Instance.new("Highlight")
+        highlight.Name = "Highlight"
+        highlight.Parent = scpsaw
+    elseif args[1] == "173" then
+        local highlighter = Instance.new("Highlight")
+        highlighter.Name = "highlighter"
+        highlighter.Parent = workspace.SCP["173"]
+    elseif args[1] == "049" then
+        local highlightdupt = Instance.new("Highlight")
+        highlightdupt.Name = "highlightmsi"
+        highlightdupt.Parent = workspace.SCP["049"]
+    elseif args[1] == "106" then
+        local canwegetmuchhigher = Instance.new("Highlight")
+        canwegetmuchhigher.Name = "HighLIGHT"
+        canwegetmuchhigher.Parent = workspace.SCP["106"]
+    elseif args[1]:lower() == "all" then
+        local scpsaw = workspace.SCP["096"]
+        local highlight = Instance.new("Highlight")
+        highlight.Name = "Highlight"
+        highlight.Parent = scpsaw
 
-    if table.find(target, args[1]) then
-        local hi = Instance.new('Highlight')
-        hi.Parent = workspace.SCP[args[1]]
+        local highlightdupt = Instance.new("Highlight")
+        highlightdupt.Name = "highlightmsi"
+        highlightdupt.Parent = workspace.SCP["049"]
+
+        local highlighter = Instance.new("Highlight")
+        highlighter.Name = "highlighter"
+        highlighter.Parent = workspace.SCP["173"]
         
-        local colors = {
-            BrickColor.new('Bright red'),
-            BrickColor.new('Bright blue'),
-            BrickColor.new('Really black')
-        }
-        
-        local randomColor = colors[math.random(1, #colors)]
-        hi.FillColor = randomColor
-    elseif not workspace.SCP[args[1]] then
-        notify("SCP has been neutralized.")
-    elseif args[1] == 'all' or args[1] == '' then
-        for _, scp in ipairs(target) do
-            local h = Instance.new('Highlight')
-            h.Parent = workspace.SCP[scp]
-            local colors = {
-                BrickColor.new('Bright red'),
-                BrickColor.new('Bright blue'),
-                BrickColor.new('Really black')
-            }
-            local randomColor = colors[math.random(1, #colors)]
-            h.FillColor = randomColor
-        end
-    else
-        notify('Who?')
+        local canwegetmuchhigher = Instance.new("Highlight")
+        canwegetmuchhigher.Name = "HighLIGHT"
+        canwegetmuchhigher.Parent = workspace.SCP["106"]
+
+        local highlighter = Instance.new("Highlight")
+        canwegetmuchhigher.Name = "highlighter"
+        canwegetmuchhigher.Parent = workspace.SCP["173"]
     end
 end)
-
 
 
 addcmd('destroyhighlight', {''}, function(args, speaker)
@@ -12305,51 +12313,35 @@ addcmd('destroyhighlight', {''}, function(args, speaker)
 			local scpzero = SCP:FindFirstChild("096")
 			if scpzero and scpzero.Highlight then
 				scpzero.Highlight:Destroy()
-            else
-                notify('Who?')
 			end
 		elseif args[1] == "049" then
 			if workspace.SCP["049"] and workspace.SCP["049"].highlightmsi then
 				workspace.SCP["049"].highlightmsi:Destroy()
-            else
-                notify('Who?')
 			end
 		elseif args[1] == "106" then
 			if workspace.SCP["106"] and workspace.SCP["106"].HighLIGHT then
 				workspace.SCP["106"].HighLIGHT:Destroy()
-            else
-                notify('Who?')
 			end
 		elseif args[1] == "173" then
 			if workspace.SCP["173"] and workspace.SCP["173"].highlighter then
 				workspace.SCP["173"].highlighter:Destroy()
-            else
-                notify('Who?')
 			end
 		elseif args[1]:lower() == "all" then
 			local scpzero = SCP:FindFirstChild("096")
 			if scpzero and scpzero.Highlight then
 				scpzero.Highlight:Destroy()
-            else
-                notify('Who?')
 			end
 			
 			if workspace.SCP["049"] and workspace.SCP["049"].highlightmsi then
 				workspace.SCP["049"].highlightmsi:Destroy()
-            else
-                notify('Who?')
 			end
 			
 			if workspace.SCP["106"] and workspace.SCP["106"].HighLIGHT then
 				workspace.SCP["106"].HighLIGHT:Destroy()
-            else
-                notify('Who?')
 			end
 			
 			if workspace.SCP["173"] and workspace.SCP["173"].highlighter then
 				workspace.SCP["173"].highlighter:Destroy()
-            else
-                notify('Who?')
 			end
 		end
 	end
