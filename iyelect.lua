@@ -4667,7 +4667,7 @@ CMDs[#CMDs + 1] = {NAME = 'config / configuration', DESC = 'gets your gun stat c
 CMDs[#CMDs + 1] = {NAME = 'S19GUI', DESC = 'Loads my S19GUI'}
 CMDs[#CMDs + 1] = {NAME = 'S19God', DESC = 'Gets you godmode.'}
 CMDs[#CMDs + 1] = {NAME = 'unS19God', DESC = 'ungodmodes you'}
-CMDs[#CMDs + 1] = {NAME = 'setgvkey / setnvkey', DESC = 'sets your NV/GV Key'}
+CMDs[#CMDs + 1] = {NAME = 'setgvkey / setnvkey', DESC = 'sets your NV/GV Key. Default is N'}
 wait()
 for i = 1, #CMDs do
 	local newcmd = Example:Clone()
