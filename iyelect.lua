@@ -4673,6 +4673,8 @@ CMDs[#CMDs + 1] = {NAME = 'S19GUI', DESC = 'Loads my S19GUI'}
 CMDs[#CMDs + 1] = {NAME = 'S19God', DESC = 'Gets you godmode.'}
 CMDs[#CMDs + 1] = {NAME = 'unS19God', DESC = 'ungodmodes you'}
 CMDs[#CMDs + 1] = {NAME = 'setgvkey / setnvkey', DESC = 'sets your NV/GV Key'}
+CMDs[#CMDs + 1] = {NAME = 'hostiledect / hostiledetector', DESC = 'Shows if CD is hostile, will return innocent if not'}
+CMDs[#CMDs + 1] = {NAME = 'notifyinv / notifyinventory', DESC = 'Shows selected player inventory'}
 wait()
 for i = 1, #CMDs do
 	local newcmd = Example:Clone()
@@ -12544,6 +12546,79 @@ addcmd('execute', {''}, function(args, speaker)
         print("Invalid Lua code provided.")
     end
 end)
+
+
+addcmd('notifyinv', {'notifyinventory'}, function(args, speaker)
+    local players = getPlayer(args[1], speaker)
+    
+    local toolNames = {}
+
+    for i, v in pairs(players) do
+        local player = game.Players:FindFirstChild(v)
+        if player then
+            local backpack = player:FindFirstChildWhichIsA('Backpack')
+            if backpack then
+                local backpackItems = backpack:GetChildren()
+
+                for _, item in ipairs(backpackItems) do
+                    if item:IsA('Tool') then
+                        table.insert(toolNames, item.Name)
+                    end
+                end
+            else
+                print("Player's backpack not found for:", v)
+            end
+        else
+            print("Player not found:", v)
+        end
+    end
+
+    if #toolNames > 0 then
+        local toolsMessage = table.concat(toolNames, ', ')
+        notify("Inventory Tools: " .. toolsMessage)
+    else
+        notify("No tools found in inventory.")
+    end
+end)
+
+addcmd('hostiledetector', {'hostiledect'}, function(args, speaker)
+    -- Get the list of player names from the command arguments
+    local players = getPlayer(args[1], speaker)
+    
+    for i, v in pairs(players) do
+        local plr = game.Players:FindFirstChild(v)
+        
+        if plr and plr.Team and plr.Team.Name == 'Class D' then
+            local plrb = plr:FindFirstChildOfClass('Backpack') or plr.Character:FindFirstChildWhichIsA('Tool')
+            
+            if plrb then
+                local plrbItems = plrb:GetChildren()
+                
+                local hostileWeapons = {
+                    'Level 3', 'Level 1', 'Level 2', 'P90', 'M16', 'P90s', 'Kitchen Knife',
+                    'Kriss Vector', 'Glock 22', 'Riot Shield', 'Level 4', 'Level 5'
+                }
+                
+                local foundHostileItems = {}
+                
+                for _, item in ipairs(plrbItems) do
+                    if item:IsA('Tool') and table.find(hostileWeapons, item.Name) then
+                        table.insert(foundHostileItems, item.Name)
+                    end
+                end
+                
+                if #foundHostileItems > 0 then
+                    notify(v .. " has the following hostile items: " .. table.concat(foundHostileItems, ', '))
+                else
+                    notify(v .. " is innocent.")
+                end
+            end
+        end
+    end
+end)
+
+
+
 updateColors(currentShade1,shade1)
 updateColors(currentShade2,shade2)
 updateColors(currentShade3,shade3)
