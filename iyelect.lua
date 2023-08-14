@@ -1,10 +1,16 @@
 if IY_LOADED and not _G.IY_DEBUG == true then
+	print'Infinite Yield is already loaded!'
 	return
 end
 
 pcall(function() getgenv().IY_LOADED = true end)
 
 COREGUI = game:GetService("CoreGui")
+if not game:IsLoaded() then
+    game.StarterGui:SetCore("SendNotification", { Title = "Infinite Yield Notification", Text = "Infinite Yield is waiting for the game to load!", Duration = 5 })
+    game.Loaded:Wait()
+end
+
 currentVersion = '5.9.3'
 
 Players = game:GetService("Players")
@@ -1899,7 +1905,6 @@ end)()
 ViewportTextBox.convert(Cmdbar).View.ZIndex = 10
 ViewportTextBox.convert(Cmdbar_2).View.ZIndex = 10
 ViewportTextBox.convert(Cmdbar_3).View.ZIndex = 10
-
 IYMouse = Players.LocalPlayer:GetMouse()
 UserInputService = game:GetService("UserInputService")
 TweenService = game:GetService("TweenService")
@@ -12251,9 +12256,9 @@ addcmd('GearVision', {'NightVision'}, function(args, speaker)
 end)
 
 addcmd('setgvkey', {'setnvkey'}, function(args, speaker)
-    local inputKey = args[1]
-    local capitalizedKey = string.upper(inputKey) -- Convert the input to uppercase
-    gearkey = Enum.KeyCode[capitalizedKey]
+    local ahhhh = args[1]
+    local awo = string.upper(ahhhh)
+    gearkey = Enum.KeyCode[awo]
 end)
 
 
@@ -12404,7 +12409,7 @@ addcmd('BM9s', {'Beretta M9s'}, function(args, speaker)
         
     game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("PrivateEvent"):FireServer(unpack(nargs))
     else
-        print('.')
+        return
     end
 end)
 
