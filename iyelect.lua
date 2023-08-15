@@ -4673,8 +4673,8 @@ CMDs[#CMDs + 1] = {NAME = 'S19GUI', DESC = 'Loads my S19GUI'}
 CMDs[#CMDs + 1] = {NAME = 'S19God', DESC = 'Gets you godmode.'}
 CMDs[#CMDs + 1] = {NAME = 'unS19God', DESC = 'ungodmodes you'}
 CMDs[#CMDs + 1] = {NAME = 'setgvkey / setnvkey', DESC = 'sets your NV/GV Key'}
-CMDs[#CMDs + 1] = {NAME = 'hostiledect / hostiledetector', DESC = 'Shows if CD is hostile, will return innocent if not'}
-CMDs[#CMDs + 1] = {NAME = 'notifyinv / notifyinventory', DESC = 'Shows selected player inventory'}
+CMDs[#CMDs + 1] = {NAME = 'hostd / hostiledetector', DESC = 'Shows if CD is hostile, will return innocent if not'}
+CMDs[#CMDs + 1] = {NAME = 'notifyinv / vinv', DESC = 'Shows selected player inventory'}
 wait()
 for i = 1, #CMDs do
 	local newcmd = Example:Clone()
@@ -12271,87 +12271,70 @@ addcmd('Identification Level-4', {''}, function(args, speaker)
 end)
 
 
-addcmd('highlight', {''}, function(args, speaker)
-    if args[1] == "096" then
-        local scpsaw = workspace.SCP["096"]
-        local highlight = Instance.new("Highlight")
-        highlight.Name = "Highlight"
-        highlight.Parent = scpsaw
-    elseif args[1] == "173" then
-        local highlighter = Instance.new("Highlight")
-        highlighter.Name = "highlighter"
-        highlighter.Parent = workspace.SCP["173"]
-    elseif args[1] == "049" then
-        local highlightdupt = Instance.new("Highlight")
-        highlightdupt.Name = "highlightmsi"
-        highlightdupt.Parent = workspace.SCP["049"]
-    elseif args[1] == "106" then
-        local canwegetmuchhigher = Instance.new("Highlight")
-        canwegetmuchhigher.Name = "HighLIGHT"
-        canwegetmuchhigher.Parent = workspace.SCP["106"]
-    elseif args[1]:lower() == "all" then
-        local scpsaw = workspace.SCP["096"]
-        local highlight = Instance.new("Highlight")
-        highlight.Name = "Highlight"
-        highlight.Parent = scpsaw
 
-        local highlightdupt = Instance.new("Highlight")
-        highlightdupt.Name = "highlightmsi"
-        highlightdupt.Parent = workspace.SCP["049"]
-
-        local highlighter = Instance.new("Highlight")
-        highlighter.Name = "highlighter"
-        highlighter.Parent = workspace.SCP["173"]
-        
-        local canwegetmuchhigher = Instance.new("Highlight")
-        canwegetmuchhigher.Name = "HighLIGHT"
-        canwegetmuchhigher.Parent = workspace.SCP["106"]
-
-        local highlighter = Instance.new("Highlight")
-        canwegetmuchhigher.Name = "highlighter"
-        canwegetmuchhigher.Parent = workspace.SCP["173"]
-    end
+addcmd('highlight', {}, function(args, speaker)
+	local scps = {
+		'096',
+		'173',
+		'106',
+		'049'
+	}
+	
+	if args[1] and args[1] ~= 'all' then
+		local scpId = args[1]
+		
+		if table.find(scps, scpId) then
+			local highl = Instance.new('Highlight')
+			
+			local scpObject = workspace.SCP[scpId]
+			
+			if scpObject then
+				highl.Parent = scpObject
+			else
+				notify('SCP is dead.')
+			end
+		end
+	elseif args[1] and args[1] == 'all' then
+		execCmd('highlight 173')
+		execCmd('highlight 096')
+		execCmd('highlight 049')
+		execCmd('highlight 106')
+	else
+		notify('Usage: highlight <SCP Number>')
+	end
 end)
-
 
 addcmd('destroyhighlight', {''}, function(args, speaker)
 	if game.PlaceId == 1440936008 then
-		local SCP = game.Workspace.SCP
+		local SCP = workspace.SCP
+		local scps = {
+			'096',
+			'173',
+			'049',
+			'106'
+		}
+		
+		if args[1] and args[1] ~= 'all' then
+			local scp0 = args[1]
+			
+			if table.find(scps, scpId) then
+				local scpo = workspace.SCP[scp0]
 
-		if args[1] == "096" then
-			local scpzero = SCP:FindFirstChild("096")
-			if scpzero and scpzero.Highlight then
-				scpzero.Highlight:Destroy()
+				if scpo then
+					for i,v in pairs(scpo:GetChildren()) do
+						if v:IsA('Highlight') then
+							v:Destroy()
+						end
+					end
+				else
+					notify('No SCP data found.')
+				end
 			end
-		elseif args[1] == "049" then
-			if workspace.SCP["049"] and workspace.SCP["049"].highlightmsi then
-				workspace.SCP["049"].highlightmsi:Destroy()
-			end
-		elseif args[1] == "106" then
-			if workspace.SCP["106"] and workspace.SCP["106"].HighLIGHT then
-				workspace.SCP["106"].HighLIGHT:Destroy()
-			end
-		elseif args[1] == "173" then
-			if workspace.SCP["173"] and workspace.SCP["173"].highlighter then
-				workspace.SCP["173"].highlighter:Destroy()
-			end
-		elseif args[1]:lower() == "all" then
-			local scpzero = SCP:FindFirstChild("096")
-			if scpzero and scpzero.Highlight then
-				scpzero.Highlight:Destroy()
-			end
-			
-			if workspace.SCP["049"] and workspace.SCP["049"].highlightmsi then
-				workspace.SCP["049"].highlightmsi:Destroy()
-			end
-			
-			if workspace.SCP["106"] and workspace.SCP["106"].HighLIGHT then
-				workspace.SCP["106"].HighLIGHT:Destroy()
-			end
-			
-			if workspace.SCP["173"] and workspace.SCP["173"].highlighter then
-				workspace.SCP["173"].highlighter:Destroy()
-			end
+		elseif args[1] and args[1] == 'all' then
+			execCmd('destroyhighlight 096')
+			execCmd('destroyhighlight 106')
+			execCmd('destroyhighlight 049')
+			execCmd('destroyhighlight 069')
 		end
 	end
 end)
@@ -12548,7 +12531,7 @@ addcmd('execute', {''}, function(args, speaker)
 end)
 
 
-addcmd('notifyinv', {'notifyinventory'}, function(args, speaker)
+addcmd('notifyinv', {'vinv'}, function(args, speaker)
     local players = getPlayer(args[1], speaker)
     
     local toolNames = {}
@@ -12556,7 +12539,7 @@ addcmd('notifyinv', {'notifyinventory'}, function(args, speaker)
     for i, v in pairs(players) do
         local player = game.Players:FindFirstChild(v)
         if player then
-            local backpack = player:FindFirstChildWhichIsA('Backpack')
+            local backpack = player:FindFirstChildOfClass('Backpack')
             if backpack then
                 local backpackItems = backpack:GetChildren()
 
@@ -12581,8 +12564,7 @@ addcmd('notifyinv', {'notifyinventory'}, function(args, speaker)
     end
 end)
 
-addcmd('hostiledetector', {'hostiledect'}, function(args, speaker)
-    -- Get the list of player names from the command arguments
+addcmd('hostiledetector', {'hostd'}, function(args, speaker)
     local players = getPlayer(args[1], speaker)
     
     for i, v in pairs(players) do
