@@ -1,7 +1,7 @@
 --[[ 
         Hello everyone reading this, this is a Site-19 GUI, will be super private to only my exploiters friends.
         If you are an admin or mod in S-19 reading this, how the fuck did you get here?
-        Last updated 7/27/23
+        Last updated 8/1723
         Don't ask me why I didn't create single section then add dropdowns, I am too lazy to revamp it again
 
 ]]
@@ -17,6 +17,7 @@ local rad = Forums:NewSection("Radio")
 local shield = Forums:NewSection("Riot Shields")
 local keycha = Forums:NewSection("Keychains")
 local keyca = Forums:NewSection("Keycards")
+local candy = Forums:NewSection('SCP-330 (TAKE TWO)')
 local brush = Forums:NewSection("Brushes")
 local vest = Forums:NewSection("Vests")
 local knives = Forums:NewSection("Knives")
@@ -24,6 +25,7 @@ local proj = Forums:NewSection("P90")
 local KV = Forums:NewSection("Kriss Vector")
 local wrench = Forums:NewSection("Wrenches")
 local misc = Forums:NewSection("Misc")
+local u1 = Vector3.new(0, 3, 0)
 local speaker = game.Players.LocalPlayer or game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
 function goback()
     local pickups = workspace.Ignore.Pickups
@@ -41,315 +43,324 @@ function goback()
             v.CFrame = destinationCFrame
         end
     end
+    for i, v in pairs(workspace.SCP['330']:GetChildren()) do
+        if v:IsA('BasePart') or v:IsA('Part') then
+            v.CFrame = CFrame.new(775, 8, -152)
+        end
+    end
 end
 
-
+candy:NewButton('Candy', function()
+    workspace.SCP:FindFirstChild('330'):WaitForChild('Pickup').CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
+    task.wait(5)
+    goback()
+end)
 rad:NewButton('Radio/Medkit', function()
-    workspace.Ignore.Pickups.Radio:GetChildren()[15].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Radio:GetChildren()[15].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 
 rad:NewButton('Radio', function()
-    workspace.Ignore.Pickups.Radio:GetChildren()[6].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Radio:GetChildren()[6].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 
 rad:NewButton('Radio', function()
-    workspace.Ignore.Pickups.Radio:GetChildren()[7].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Radio:GetChildren()[7].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 
 rad:NewButton('Radio', function()
-   workspace.Ignore.Pickups.Radio:GetChildren()[10].CFrame = speaker.Character.HumanoidRootPart.CFrame
+   workspace.Ignore.Pickups.Radio:GetChildren()[10].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
    task.wait(5)
     goback()
 end)
 
 M16:NewButton("Pickup1", function()
-  workspace.Ignore.Pickups.M16:GetChildren()[4].CFrame = speaker.Character.HumanoidRootPart.CFrame 
+  workspace.Ignore.Pickups.M16:GetChildren()[4].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
   task.wait(5)
     goback()
 end)
 M16:NewButton("Pickup2", function()
-  workspace.Ignore.Pickups.M16.Pickup.CFrame = speaker.Character.HumanoidRootPart.CFrame 
+  workspace.Ignore.Pickups.M16.Pickup.CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
   task.wait(5)
     goback()
 end)
 M16:NewButton("Pickup3", function()
-  workspace.Ignore.Pickups.M16:GetChildren()[2].CFrame = speaker.Character.HumanoidRootPart.CFrame 
+  workspace.Ignore.Pickups.M16:GetChildren()[2].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
   task.wait(5)
     goback()
 end)
 M16:NewButton("Pickup4", function()
- workspace.Ignore.Pickups.M16:GetChildren()[3].CFrame = speaker.Character.HumanoidRootPart.CFrame
+ workspace.Ignore.Pickups.M16:GetChildren()[3].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
  task.wait(5)
     goback()
 end)
 
 KV:NewButton("Pickup1", function()
-  workspace.Ignore.Pickups["Kriss Vector"]:GetChildren()[3].CFrame = speaker.Character.HumanoidRootPart.CFrame 
+  workspace.Ignore.Pickups["Kriss Vector"]:GetChildren()[3].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
   task.wait(5)
     goback()
 end)
 KV:NewButton("Pickup2", function()
-    workspace.Ignore.Pickups["Kriss Vector"].Pickup.CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups["Kriss Vector"].Pickup.CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 KV:NewButton("Pickup3", function()
-  workspace.Ignore.Pickups["Kriss Vector"]:GetChildren()[2].CFrame = speaker.Character.HumanoidRootPart.CFrame 
+  workspace.Ignore.Pickups["Kriss Vector"]:GetChildren()[2].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
   task.wait(5)
     goback()
 end)
 
 shield:NewButton("Pickup1", function()
-    workspace.Ignore.Pickups.Shield:GetChildren()[7].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Shield:GetChildren()[7].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback() 
 end)
 shield:NewButton("Pickup2", function()
-   workspace.Ignore.Pickups.Shield.Pickup.CFrame = speaker.Character.HumanoidRootPart.CFrame 
+   workspace.Ignore.Pickups.Shield.Pickup.CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
    task.wait(5)
     goback()
 end)
 shield:NewButton("Pickup3", function()
-  workspace.Ignore.Pickups.Shield:GetChildren()[4].CFrame = speaker.Character.HumanoidRootPart.CFrame
+  workspace.Ignore.Pickups.Shield:GetChildren()[4].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
   task.wait(5)
     goback() 
 end)
 shield:NewButton("Pickup4", function()
-   workspace.Ignore.Pickups.Shield:GetChildren()[2].CFrame = speaker.Character.HumanoidRootPart.CFrame
+   workspace.Ignore.Pickups.Shield:GetChildren()[2].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
    task.wait(5)
     goback() 
 end)
 shield:NewButton("Pickup7", function()
-    workspace.Ignore.Pickups.Shield:GetChildren()[3].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Shield:GetChildren()[3].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 shield:NewButton("Pickup6", function()
-    workspace.Ignore.Pickups.Shield:GetChildren()[6].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Shield:GetChildren()[6].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 shield:NewButton("Pickup5", function()
-    workspace.Ignore.Pickups.Shield:GetChildren()[5].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Shield:GetChildren()[5].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 
 
 keycha:NewButton("Pi7", function()
-    workspace.Ignore.Pickups.Keychains:GetChildren()[3].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Keychains:GetChildren()[3].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 keycha:NewButton("Pi6/L-3Keycard", function()
-    workspace.Ignore.Pickups.Keychains:GetChildren()[6].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Keychains:GetChildren()[6].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 keycha:NewButton("P5/Keycard", function()
-    workspace.Ignore.Pickups.Keychains:GetChildren()[5].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Keychains:GetChildren()[5].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 keycha:NewButton("Pi4", function()
-    workspace.Ignore.Pickups.Keychains:GetChildren()[2].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Keychains:GetChildren()[2].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 keycha:NewButton("Pi3", function()
-    workspace.Ignore.Pickups.Keychains:GetChildren()[4].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Keychains:GetChildren()[4].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 keycha:NewButton("Pi2", function()
-    workspace.Ignore.Pickups.Keychains.Pickup.CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Keychains.Pickup.CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 
 keyca:NewButton("L-3", function()
-    workspace.Ignore.Pickups.Keycards:GetChildren()[2].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Keycards:GetChildren()[2].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 
 keyca:NewButton("L-3", function()
-    workspace.Ignore.Pickups.Keycards:GetChildren()[5].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Keycards:GetChildren()[5].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 keyca:Seperator()
 keyca:NewButton("L-2", function()
-    workspace.Ignore.Pickups.Keycards:GetChildren()[6].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Keycards:GetChildren()[6].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 
 keyca:NewButton("L-2", function()
-    workspace.Ignore.Pickups.Keycards.Pickup.CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Keycards.Pickup.CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 keyca:Seperator()
 keyca:NewButton("L-1", function()
-    workspace.Ignore.Pickups.Keycards:GetChildren()[7].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Keycards:GetChildren()[7].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 
 keyca:NewButton("L-1", function()
-    workspace.Ignore.Pickups.Keycards:GetChildren()[3].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Keycards:GetChildren()[3].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 med:NewButton('Pi', function()
-    workspace.Ignore.Pickups.Medkit:GetChildren()[8].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Medkit:GetChildren()[8].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 med:NewButton('Pi', function()
-    workspace.Ignore.Pickups.Medkit.Pickup.CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Medkit.Pickup.CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 med:NewButton('Pi', function()
-    workspace.Ignore.Pickups.Medkit:GetChildren()[4].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Medkit:GetChildren()[4].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 med:NewButton('Pi', function()
-    workspace.Ignore.Pickups.Medkit:GetChildren()[2].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Medkit:GetChildren()[2].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 med:NewButton('Pi', function()
-    workspace.Ignore.Pickups.Medkit:GetChildren()[6].CFrame = speaker.Character.HumanoidRootPart.CFrame 
+    workspace.Ignore.Pickups.Medkit:GetChildren()[6].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 med:NewButton('Pi', function()
-    workspace.Ignore.Pickups.Medkit:GetChildren()[2].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Medkit:GetChildren()[2].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 med:NewButton('Pi', function()
-    workspace.Ignore.Pickups.Medkit:GetChildren()[5].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Medkit:GetChildren()[5].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 med:NewButton('Pi', function()
-    workspace.Ignore.Pickups.Medkit:GetChildren()[7].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Medkit:GetChildren()[7].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 med:NewButton('Pi', function()
-    workspace.Ignore.Pickups.Medkit:GetChildren()[3].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Medkit:GetChildren()[3].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 
 
 proj:NewButton('Pickup', function()
-    workspace.Ignore.Pickups.P90.Pickup.CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.P90.Pickup.CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 
 proj:NewButton('Pickup', function()
-    workspace.Ignore.Pickups.P90:GetChildren()[17].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.P90:GetChildren()[17].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 
 proj:NewButton('Pickup', function()
-    workspace.Ignore.Pickups.P90:GetChildren()[16].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.P90:GetChildren()[16].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 
 proj:NewButton('Pickup', function()
-    workspace.Ignore.Pickups.P90:GetChildren()[18].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.P90:GetChildren()[18].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 
 proj:NewButton('Pickup', function()
-    workspace.Ignore.Pickups.P90:GetChildren()[19].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.P90:GetChildren()[19].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 
 proj:NewButton('Pickup', function()
-    workspace.Ignore.Pickups.P90:GetChildren()[2].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.P90:GetChildren()[2].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 
 proj:NewButton('Pickup', function()
-    workspace.Ignore.Pickups.P90:GetChildren()[11].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.P90:GetChildren()[11].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 
 G22:NewButton('Pickup', function()
-    workspace.Ignore.Pickups.Glock22.Pickup.CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Glock22.Pickup.CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 
 G22:NewButton('Pickup', function()
-    workspace.Ignore.Pickups.Glock22:GetChildren()[3].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Glock22:GetChildren()[3].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 
 G22:NewButton('Pickup', function()
-    workspace.Ignore.Pickups.Glock22:GetChildren()[4].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Glock22:GetChildren()[4].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 
 G22:NewButton('Pickup', function()
-    workspace.Ignore.Pickups.Glock22:GetChildren()[5].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Glock22:GetChildren()[5].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 
 brush:NewButton('Pickup', function()
-    workspace.Ignore.Pickups.Brush.Pickup.CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Brush.Pickup.CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 
 knives:NewButton('Pickup', function()
-    workspace.Ignore.Pickups.Knives.Pickup.CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Knives.Pickup.CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 
 knives:NewButton('Pickup', function()
-    workspace.Ignore.Pickups.Knives:GetChildren()[2].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Knives:GetChildren()[2].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 
 vest:NewButton('Pickup', function()
-    workspace.Ignore.Pickups.Vest:GetChildren()[11].CFrame = speaker.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Vest:GetChildren()[11].CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
     task.wait(5)
     goback()
 end)
 wrench:NewButton('Wrench1', function()
-    workspace.Ignore.Pickups.Wrench:GetChildren()[2].CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Wrench:GetChildren()[2].CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + u1
 end)
 
 wrench:NewButton('Wrench2', function()
-    workspace.Ignore.Pickups.Wrench.Pickup.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+    workspace.Ignore.Pickups.Wrench.Pickup.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + u1
 end)
 misc:NewButton('SWAT', function()
     -- Basically gives you a shield to your front, that's it.
