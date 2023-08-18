@@ -1,7 +1,7 @@
 --[[ 
         Hello everyone reading this, this is a Site-19 GUI, will be super private to only my exploiters friends.
         If you are an admin or mod in S-19 reading this, how the fuck did you get here?
-        Last updated 8/1723
+        Last updated 8/17/23
         Don't ask me why I didn't create single section then add dropdowns, I am too lazy to revamp it again
 
 ]]
