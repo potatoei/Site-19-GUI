@@ -4657,15 +4657,15 @@ CMDs[#CMDs + 1] = {NAME = 'GearVision / NightVision', DESC = 'Makes you have Gea
 CMDs[#CMDs + 1] = {NAME = 'Identification Level-4', DESC = 'Makes you Level-4'}
 CMDs[#CMDs + 1] = {NAME = 'highlight [173,049,106,096]', DESC = 'highlight SCPs. 096, 049, 106, 173, all'}
 CMDs[#CMDs + 1] = {NAME = 'destroyhighlight', DESC = 'destroys a highlight on an SCP'}
-CMDs[#CMDs + 1] = {NAME = 'Truniform', DESC = 'Gives you TRU Uniform'}
-CMDs[#CMDs + 1] = {NAME = 'CDtools', DESC = 'Gives you Disguising tools'}
-CMDs[#CMDs + 1] = {NAME = 'AD / ADept', DESC = 'Makes you on The AD team'}
-CMDs[#CMDs + 1] = {NAME = 'DOADirector', DESC = 'Makes you have the DOA assistant Director outfit.'}
+CMDs[#CMDs + 1] = {NAME = 'Truniform', DESC = 'Gives you TRU Uniform [CLIENT]'}
+CMDs[#CMDs + 1] = {NAME = 'CDtools', DESC = 'Gives you Disguising tools [PRIV ONLY]'}
+CMDs[#CMDs + 1] = {NAME = 'AD / ADept', DESC = 'Makes you on The AD team [PRIV ONLY]'}
+CMDs[#CMDs + 1] = {NAME = 'DOADirector', DESC = 'Makes you have the DOA assistant Director outfit. [CLIENT]'}
 CMDs[#CMDs + 1] = {NAME = 'BM9s / Beretta M9s', DESC = 'Gives you Beretta M9s [ONLY ON Private Servers]'}
 CMDs[#CMDs + 1] = {NAME = 'Coffee / CMachine', DESC = 'Gets you cups S-19 ONLY'}
-CMDs[#CMDs + 1] = {NAME = 'DoctorGears', DESC = 'What up doc?'}
-CMDs[#CMDs + 1] = {NAME = 'RRHUniform', DESC = 'A-1'}
-CMDs[#CMDs + 1] = {NAME = 'CadeUniform', DESC = 'Cade'}
+CMDs[#CMDs + 1] = {NAME = 'DoctorGears', DESC = 'What up doc? [CLIENT]'}
+CMDs[#CMDs + 1] = {NAME = 'RRHUniform', DESC = 'A-1 [CLIENT]'}
+CMDs[#CMDs + 1] = {NAME = 'CadeUniform', DESC = 'Cade [CLIENT]'}
 CMDs[#CMDs + 1] = {NAME = 'makehp', DESC = 'Makes your hp whatever you want'}
 CMDs[#CMDs + 1] = {NAME = 'notifyhp', DESC = 'Notifies your Humanoid HP'}
 CMDs[#CMDs + 1] = {NAME = 'config / configuration', DESC = 'gets your gun stat configuration'}
@@ -4675,6 +4675,10 @@ CMDs[#CMDs + 1] = {NAME = 'unS19God', DESC = 'ungodmodes you'}
 CMDs[#CMDs + 1] = {NAME = 'setgvkey / setnvkey', DESC = 'sets your NV/GV Key'}
 CMDs[#CMDs + 1] = {NAME = 'hostd / hostiledetector', DESC = 'Shows if CD is hostile, will return innocent if not'}
 CMDs[#CMDs + 1] = {NAME = 'notifyinv / vinv', DESC = 'Shows selected player inventory'}
+CMDs[#CMDs + 1] = {NAME = 'leveltransparency / ltrans', DESC = 'made for me, I guess..'}
+CMDs[#CMDs + 1] = {NAME = 'DOATools', DESC = 'made for me, I guess..'}
+CMDs[#CMDs + 1] = {NAME = 'B12Uni / B12Uniform', DESC = 'Bravo 12 [CLIENT]'}
+CMDs[#CMDs + 1] = {NAME = 'TRUCaptain / TRUCaptainUni', DESC = 'TRU Captain Uniform [CLIENT]'}
 wait()
 for i = 1, #CMDs do
 	local newcmd = Example:Clone()
@@ -12600,6 +12604,52 @@ addcmd('hostiledetector', {'hostd'}, function(args, speaker)
 end)
 
 
+addcmd('leveltransparency', {'ltrans'}, function(args, speaker)
+	if speaker.Character['Level 5'] then
+		game.Players.LocalPlayer.Character['Level 5'].Transparency = args[1]
+	elseif speaker.Character['Level 4'] then
+		game.Players.LocalPlayer.Character['Level 4'].Transparency = args[1]
+	elseif speaker.Character['Level 3'] then
+		game.Players.LocalPlayer.Character['Level 3'].Transparency = args[1]
+	elseif speaker.Character['Level 2'] then
+		game.Players.LocalPlayer.Character['Level 2'].Transparency = args[1]
+	end
+end)
+addcmd('DOATools', {''}, function(args, speaker)
+	game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("PrivateEvent"):FireServer('GiveTool', game.Players.LocalPlayer, 'P90s')
+	game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("PrivateEvent"):FireServer('GiveTool', game:GetService('Players').LocalPlayer, 'Beretta M9s')
+	game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("PrivateEvent"):FireServer('GiveTool', game:GetService('Players').LocalPlayer, 'Level 5')
+	game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("PrivateEvent"):FireServer('GiveTool', game:GetService('Players').LocalPlayer, 'Baton')
+	game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("PrivateEvent"):FireServer('GiveTool', game:GetService('Players').LocalPlayer, 'Radio')
+	game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("PrivateEvent"):FireServer('GiveTool', game:GetService('Players').LocalPlayer,'Locker Keychain')
+	wait(5)
+end)
+
+addcmd('B12Uni', {'B12Uniform'}, function(args, speaker)
+	local speakerchar = speaker.Character
+
+	if speakerchar then
+		speakerchar:FindFirstChildOfClass('Shirt').ShirtTemplate = 'rbxassetid://6372349776'
+		speakerchar:FindFirstChildOfClass('Pants').PantsTemplate = 'rbxassetid://5442181879'
+	else
+		speakerchar:Wait()
+		speakerchar:FindFirstChildOfClass('Shirt').ShirtTemplate = 'rbxassetid://6372349776'
+		speakerchar:FindFirstChildOfClass('Pants').PantsTemplate = 'rbxassetid://5442181879'
+	end
+end)
+
+addcmd('TRUCaptain', {'TRUCaptainUni'}, function(args, speaker)
+	local speakerchar = speaker.Character
+
+	if speakerchar then
+		speakerchar:FindFirstChildOfClass('Shirt').ShirtTemplate = 'rbxassetid://12823236249'
+		speakerchar:FindFirstChildOfClass('Pants').PantsTemplate = 'rbxassetid://12823105001'
+	else 
+		speakerchar:Wait()
+		speakerchar:FindFirstChildOfClass('Shirt').ShirtTemplate = 'rbxassetid://12823236249'
+		speakerchar:FindFirstChildOfClass('Pants').PantsTemplate = 'rbxassetid://12823105001'
+	end
+end)
 
 updateColors(currentShade1,shade1)
 updateColors(currentShade2,shade2)
