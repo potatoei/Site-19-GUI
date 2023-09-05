@@ -3,8 +3,6 @@ if IY_LOADED and not _G.IY_DEBUG == true then
 	return
 end
 
-pcall(function() getgenv().IY_LOADED = true end)
-
 COREGUI = game:GetService("CoreGui")
 if not game:IsLoaded() then
     game.StarterGui:SetCore("SendNotification", { Title = "Infinite Yield Notification", Text = "Infinite Yield is waiting for the game to load!", Duration = 5 })
@@ -238,11 +236,12 @@ Title.ZIndex = 10
 table.insert(shade1,Title)
 table.insert(text1,Title)
 
-local Titles = {"...", "Infinite uwus", "mod admin (real)", "rwaa", "Where am I", "America", "walter black", "n", "pwa", "not april fools"}
+local Titles = {"...", "Infinite Yield FE", "infinit","limited yield", "moderator admin", "admin admin", "admin panel", "lolz admin panel", "rahhh", "KeepInfYield"}
 local Images = {"11688231017", "11339922083", "11914981726", "5783845592", "6762179979", "7846015915", "11171958623", "11308149650", "7444547410", "6093472109"}
 
 Title.Text = Titles[math.random(1, #Titles)] .. " v" .. currentVersion
 Logo.Image = "rbxassetid://" .. Images[math.random(1, #Images)]
+
 
 Dark.Name = "Dark"
 Dark.Parent = Holder
@@ -608,7 +607,7 @@ Logo.BackgroundTransparency = 1
 Logo.BorderSizePixel = 0
 Logo.Position = UDim2.new(0, 125, 0, 127)
 Logo.Size = UDim2.new(0, 10, 0, 10)
-Logo.Image = "rbxassetid://1352543873"
+Logo.Image = "rbxassetid://" .. Images[math.random(1, #Images)]
 Logo.ImageTransparency = 0
 Logo.ZIndex = 10
 
@@ -4679,6 +4678,7 @@ CMDs[#CMDs + 1] = {NAME = 'leveltransparency / ltrans', DESC = 'made for me, I g
 CMDs[#CMDs + 1] = {NAME = 'DOATools', DESC = 'made for me, I guess..'}
 CMDs[#CMDs + 1] = {NAME = 'B12Uni / B12Uniform', DESC = 'Bravo 12 [CLIENT]'}
 CMDs[#CMDs + 1] = {NAME = 'TRUCaptain / TRUCaptainUni', DESC = 'TRU Captain Uniform [CLIENT]'}
+
 wait()
 for i = 1, #CMDs do
 	local newcmd = Example:Clone()
@@ -7387,6 +7387,17 @@ addcmd('enable',{},function(args, speaker)
 	if input then
 		if input == "reset" then
 			StarterGui:SetCore("ResetButtonCallback", true)
+		elseif input == 'blink' then
+			if game.PlaceId == 1440936008 then
+				game:GetService("Lighting").Blink_Overlay_Blur.Enabled = true
+				game:GetService("Lighting").Blink_Overlay_CC.Enabled = true
+			end
+        elseif input == 'breath' or input == 'breathe' then
+            speaker.Character:FindFirstChild('HumanoidRootPart'):WaitForChild('Breath').Playing = true
+            speaker.Character:FindFirstChild('HumanoidRootPart'):WaitForChild('Breath').Looped = true
+		elseif input == 'chatter' then
+			game.Players.LocalPlayer:FindFirstChild('Radio').Chatter.Playing = true
+			game.Players.LocalPlayer:FindFIrstChild('Radio').Looped = true
 		else
 			local coreGuiType = coreGuiTypeNames[input]
 			if coreGuiType then
@@ -7401,6 +7412,17 @@ addcmd('disable',{},function(args, speaker)
 	if input then
 		if input == "reset" then
 			StarterGui:SetCore("ResetButtonCallback", false)
+		elseif input == 'blink' then 
+			if game.PlaceId == 1440936008 then
+				game:GetService("Lighting").Blink_Overlay_Blur.Enabled = false
+				game:GetService("Lighting").Blink_Overlay_CC.Enabled = false
+			end
+        elseif input == 'breath' or input == 'breathe' then
+            speaker.Character:FindFirstChild('HumanoidRootPart'):WaitForChild('Breath').Playing = false
+            speaker.Character:FindFirstChild('HumanoidRootPart'):WaitForChild('Breath').Looped = false
+		elseif input == 'chatter' then
+			game.Players.LocalPlayer:FindFirstChild('Radio').Chatter.Playing = false
+			game.Players.LocalPlayer:FindFIrstChild('Radio').Looped = false
 		else
 			local coreGuiType = coreGuiTypeNames[input]
 			if coreGuiType then
@@ -9397,7 +9419,9 @@ addcmd('sit',{},function(args, speaker)
 	speaker.Character:FindFirstChildOfClass("Humanoid").Sit = true
 end)
 addcmd('unsit',{},function(args, speaker)
-	speaker.Character:FindFirstChildOfClass("Humanoid").Sit = false
+	if speaker.Character:FindFirstChildOfClass("Humanoid").Sit == true then
+		speaker.Character:FindFirstChildOfClass("Humanoid").Sit = false
+	end
 end)
 addcmd('lay', {'laydown'}, function(args, speaker)
 	local Human = speaker.Character and speaker.Character:FindFirstChildOfClass('Humanoid')
@@ -9759,6 +9783,8 @@ end)
 addcmd('clickdelete',{},function(args, speaker)
 	if speaker == Players.LocalPlayer then
 		notify('sorry bro you cant use this')
+	else
+		notify('bruh')
 	end
 end)
 
@@ -12169,20 +12195,6 @@ addcmd('1048HP',{''},function(args, speaker)
 	notify(game.Workspace.SCP["1048"].Humanoid.Health .. "HP")
 end)
 
-
--- Helper function to autocomplete player name
-local function autocompletePlayerName(input)
-	input = input:lower()
-	local players = game:GetService("Players"):GetPlayers()
-	for _, player in ipairs(players) do
-		local name = player.Name:lower()
-		if name:sub(1, #input) == input then
-			return player
-		end
-	end
-	return ""
-end
-
 addcmd('team', {''}, function(args, speaker)
     local targetTeam = table.concat(args, " ", 2)
     local targetTeamLower = targetTeam:lower()
@@ -12238,7 +12250,6 @@ addcmd('newesp', {''}, function(args, speaker)
 end)
 
 local gearkey = Enum.KeyCode.N
-
 addcmd('GearVision', {'NightVision'}, function(args, speaker)
     local nightVisionEnabled = false
     local lighting = game:GetService("Lighting")
@@ -12262,10 +12273,11 @@ addcmd('GearVision', {'NightVision'}, function(args, speaker)
 end)
 
 addcmd('setgvkey', {'setnvkey'}, function(args, speaker)
-    local ahhhh = args[1]
-    local awo = string.upper(ahhhh)
-    gearkey = Enum.KeyCode[awo]
+    local a = args[1]
+    local bee = string.upper(a)
+    gearkey = Enum.KeyCode.bee
 end)
+
 
 
 addcmd('Identification Level-4', {''}, function(args, speaker)
@@ -12309,39 +12321,38 @@ addcmd('highlight', {}, function(args, speaker)
 end)
 
 addcmd('destroyhighlight', {''}, function(args, speaker)
-	if game.PlaceId == 1440936008 then
-		local SCP = workspace.SCP
-		local scps = {
-			'096',
-			'173',
-			'049',
-			'106'
-		}
-		
-		if args[1] and args[1] ~= 'all' then
-			local scp0 = args[1]
-			
-			if table.find(scps, scpId) then
-				local scpo = workspace.SCP[scp0]
+    local SCP = workspace:FindFirstChild('SCP')
+    local scps = {
+        '096',
+        '173',
+        '049',
+        '106'
+    }
+    
+    if args[1] and args[1] ~= 'all' then
+        local scp0 = args[1]
+        
+        if table.find(scps, scp0) then
+            local scpo = SCP[scp0]
 
-				if scpo then
-					for i,v in pairs(scpo:GetChildren()) do
-						if v:IsA('Highlight') then
-							v:Destroy()
-						end
-					end
-				else
-					notify('No SCP data found.')
-				end
-			end
-		elseif args[1] and args[1] == 'all' then
-			execCmd('destroyhighlight 096')
-			execCmd('destroyhighlight 106')
-			execCmd('destroyhighlight 049')
-			execCmd('destroyhighlight 069')
-		end
-	end
+            if scpo then
+                for _, v in pairs(scpo:GetChildren()) do
+                    if v:IsA('Highlight') then
+                        v:Destroy()
+                    end
+                end
+            else
+                notify('No SCP data found.')
+            end
+        end
+    elseif args[1] and args[1] == 'all' then
+        execCmd('destroyhighlight 096')
+        execCmd('destroyhighlight 106')
+        execCmd('destroyhighlight 049')
+        execCmd('destroyhighlight 173')
+    end
 end)
+
 
 
 addcmd('Truniform', {''}, function(args, speaker)
@@ -12568,51 +12579,12 @@ addcmd('notifyinv', {'vinv'}, function(args, speaker)
     end
 end)
 
-addcmd('hostiledetector', {'hostd'}, function(args, speaker)
-    local players = getPlayer(args[1], speaker)
-    
-    for i, v in pairs(players) do
-        local plr = game.Players:FindFirstChild(v)
-        
-        if plr and plr.Team and plr.Team.Name == 'Class D' then
-            local plrb = plr:FindFirstChildOfClass('Backpack') or plr.Character:FindFirstChildWhichIsA('Tool')
-            
-            if plrb then
-                local plrbItems = plrb:GetChildren()
-                
-                local hostileWeapons = {
-                    'Level 3', 'Level 1', 'Level 2', 'P90', 'M16', 'P90s', 'Kitchen Knife',
-                    'Kriss Vector', 'Glock 22', 'Riot Shield', 'Level 4', 'Level 5'
-                }
-                
-                local foundHostileItems = {}
-                
-                for _, item in ipairs(plrbItems) do
-                    if item:IsA('Tool') and table.find(hostileWeapons, item.Name) then
-                        table.insert(foundHostileItems, item.Name)
-                    end
-                end
-                
-                if #foundHostileItems > 0 then
-                    notify(v .. " has the following hostile items: " .. table.concat(foundHostileItems, ', '))
-                else
-                    notify(v .. " is innocent.")
-                end
-            end
-        end
-    end
-end)
-
-
 addcmd('leveltransparency', {'ltrans'}, function(args, speaker)
-	if speaker.Character['Level 5'] then
-		game.Players.LocalPlayer.Character['Level 5'].Transparency = args[1]
-	elseif speaker.Character['Level 4'] then
-		game.Players.LocalPlayer.Character['Level 4'].Transparency = args[1]
-	elseif speaker.Character['Level 3'] then
-		game.Players.LocalPlayer.Character['Level 3'].Transparency = args[1]
-	elseif speaker.Character['Level 2'] then
-		game.Players.LocalPlayer.Character['Level 2'].Transparency = args[1]
+	local me = speaker.Character
+	for i, v in pairs(me:GetChildren()) do
+		if v.Name == ('Level 5' or 'Level 4' or 'Level 3' or 'Level 2' or 'Level 1') then
+			v.Transparency = 0
+		end
 	end
 end)
 addcmd('DOATools', {''}, function(args, speaker)
@@ -12881,3 +12853,4 @@ task.spawn(function()
 	minimizeHolder()
 	if table.find({Enum.Platform.IOS, Enum.Platform.Android}, UserInputService:GetPlatform()) then notify("Unstable Device", "On mobile, Infinite Yield may have issues or features that are not functioning correctly.") end
 end)
+pcall(function() getgenv().IY_LOADED = true end)
