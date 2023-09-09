@@ -4539,7 +4539,7 @@ CMDs[#CMDs + 1] = {NAME = 'norotate / noautorotate', DESC = 'Disables AutoRotate
 CMDs[#CMDs + 1] = {NAME = 'unnorotate / autorotate', DESC = 'Enables AutoRotate'}
 CMDs[#CMDs + 1] = {NAME = 'enablestate [StateType]', DESC = 'Enables a humanoid state type'}
 CMDs[#CMDs + 1] = {NAME = 'disablestate [StateType]', DESC = 'Disables a humanoid state type'}
-CMDs[#CMDs + 1] = {NAME = 'team [team name] (CLIENT)', DESC = 'Changes your team. Sometimes fools localscripts.'}
+CMDs[#CMDs + 1] = {NAME = 'team [plr] [team name] (CLIENT)', DESC = 'Changes your team. Sometimes fools localscripts.'}
 CMDs[#CMDs + 1] = {NAME = 'nobillboardgui / nobgui / noname', DESC = 'Removes billboard and surface guis from your players (i.e. name guis at cafes)'}
 CMDs[#CMDs + 1] = {NAME = 'loopnobgui / loopnoname', DESC = 'Loop removes billboard and surface guis from your players (i.e. name guis at cafes)'}
 CMDs[#CMDs + 1] = {NAME = 'unloopnobgui / unloopnoname', DESC = 'Disables loopnobgui'}
@@ -12273,10 +12273,18 @@ addcmd('GearVision', {'NightVision'}, function(args, speaker)
 end)
 
 addcmd('setgvkey', {'setnvkey'}, function(args, speaker)
-    local a = args[1]
-    local bee = string.upper(a)
-    gearkey = Enum.KeyCode.bee
+    local keyName = args[1]
+    local success, keyCode = pcall(function()
+        return Enum.KeyCode[keyName]
+    end)
+
+    if success and keyCode then
+        gearkey = keyCode
+    else
+        notify('Night Vision Key cannot be activated {ERR_1}')
+    end
 end)
+
 
 
 
