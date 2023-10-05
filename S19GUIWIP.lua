@@ -1,7 +1,7 @@
 --[[ 
         Hello everyone reading this, this is a Site-19 GUI, will be super private to only my exploiters friends.
         If you are an admin or mod in S-19 reading this, how the fuck did you get here?
-        Last updated 8/17/23
+        Last updated 10/5/23, Added Open armory
         Don't ask me why I didn't create single section then add dropdowns, I am too lazy to revamp it again
 
 ]]
@@ -25,7 +25,7 @@ local proj = Forums:NewSection("P90")
 local KV = Forums:NewSection("Kriss Vector")
 local wrench = Forums:NewSection("Wrenches")
 local misc = Forums:NewSection("Misc")
-local u1 = Vector3.new(0, 3, 0)
+local u1 = Vector3.new(0, 2, 0)
 local speaker = game.Players.LocalPlayer or game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
 function goback()
     local pickups = workspace.Ignore.Pickups
@@ -399,3 +399,10 @@ misc:NewButton('Stop Healer Farm', function()
     isFarming = false -- Set the flag to false to stop the farming
 end)
 misc:Seperator()
+misc:NewButton('Bring Armory Button', function()
+    workspace.Special.Armory.LCZ.Buttons.Back.CFrame = speaker.Character.HumanoidRootPart.CFrame + Vector3.new(0, 0, -1.5)
+    workspace.Special.Armory.LCZ.Buttons.Back.CanCollide = false
+    wait(5)
+    workspace.Special.Armory.LCZ.Buttons.Back.CFrame = CFrame.new(583.625, 8.5, -156.500031, 0, 0, 1, 0, 1, -0, -1, 0, 0)
+    workspace.Special.Armory.LCZ.Buttons.Back.CanCollide = true
+end)
