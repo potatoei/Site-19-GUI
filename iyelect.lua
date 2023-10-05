@@ -3,6 +3,9 @@ if IY_LOADED and not _G.IY_DEBUG == true then
 	return
 end
 
+pcall(function() getgenv().IY_LOADED = true end)
+--pcall(function() _G.IY_DEBUG = true end)
+
 COREGUI = game:GetService("CoreGui")
 if not game:IsLoaded() then
     game.StarterGui:SetCore("SendNotification", { Title = "Infinite Yield Notification", Text = "Infinite Yield is waiting for the game to load!", Duration = 5 })
@@ -4678,7 +4681,7 @@ CMDs[#CMDs + 1] = {NAME = 'leveltransparency / ltrans', DESC = 'made for me, I g
 CMDs[#CMDs + 1] = {NAME = 'DOATools', DESC = 'made for me, I guess..'}
 CMDs[#CMDs + 1] = {NAME = 'B12Uni / B12Uniform', DESC = 'Bravo 12 [CLIENT]'}
 CMDs[#CMDs + 1] = {NAME = 'TRUCaptain / TRUCaptainUni', DESC = 'TRU Captain Uniform [CLIENT]'}
-
+CMDs[#CMDs + 1] = {NAME = 'SendMessage [message]', DESC = 'Sends a message [S-19 ONLY]'}
 wait()
 for i = 1, #CMDs do
 	local newcmd = Example:Clone()
@@ -4924,7 +4927,7 @@ function execCmd(cmdStr,speaker,store)
 					while lastBreakTime < cmdStartTime do
 						local success,err = pcall(cmd.FUNC,args, speaker)
 						if not success and _G.IY_DEBUG then
-							warn("Command Error:", cmdName, err)
+							print("Command Error:", cmdName, err)
 						end
 						wait(cmdDelay)
 					end
@@ -4935,7 +4938,7 @@ function execCmd(cmdStr,speaker,store)
 							cmd.FUNC(args, speaker)
 						end)
 						if not success and _G.IY_DEBUG then
-							warn("Command Error:", cmdName, err)
+							print("Command Error:", cmdName, err)
 						end
 						if cmdDelay ~= 0 then wait(cmdDelay) end
 					end
@@ -12272,17 +12275,10 @@ addcmd('GearVision', {'NightVision'}, function(args, speaker)
     end)
 end)
 
-addcmd('setgvkey', {'setnvkey'}, function(args, speaker)
-    local keyName = args[1]
-    local success, keyCode = pcall(function()
-        return Enum.KeyCode[keyName]
-    end)
-
-    if success and keyCode then
-        gearkey = keyCode
-    else
-        notify('Night Vision Key cannot be activated {ERR_1}')
-    end
+addcmd('setgvkey', {'setnvkey'}, function(args, speaker) -- CAPITALIZE
+    local originalkey = getstring(1)
+    local upperkey = string.upper(originalkey)
+    gearkey = Enum.KeyCode[upperkey]
 end)
 
 
@@ -12630,7 +12626,18 @@ addcmd('TRUCaptain', {'TRUCaptainUni'}, function(args, speaker)
 		speakerchar:FindFirstChildOfClass('Pants').PantsTemplate = 'rbxassetid://12823105001'
 	end
 end)
+addcmd('SendMessage', {''}, function(args, speaker)
+	local me = game.Players.LocalPlayer
+	local message = me.PlayerGui:WaitForChild('HudGui')['#message']
 
+	message.TextTransparency = 0
+	message.Text = 'w'
+	wait(3) -- Wait for 3 seconds
+	while message.TextTransparency < 1 do
+    	message.TextTransparency = message.TextTransparency + 0.1
+    	wait(0.1)
+	end
+end)
 updateColors(currentShade1,shade1)
 updateColors(currentShade2,shade2)
 updateColors(currentShade3,shade3)
@@ -12861,4 +12868,7 @@ task.spawn(function()
 	minimizeHolder()
 	if table.find({Enum.Platform.IOS, Enum.Platform.Android}, UserInputService:GetPlatform()) then notify("Unstable Device", "On mobile, Infinite Yield may have issues or features that are not functioning correctly.") end
 end)
-pcall(function() getgenv().IY_LOADED = true end)
+
+if _G.IY_DEBUG == true then
+StarterGui:SetCore("SendNotification", { Title = "Infinite Yield Notification", Text = "Debug is active!", Duration = 5 })
+end
