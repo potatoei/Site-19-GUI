@@ -5,7 +5,7 @@ end
 
 pcall(function() getgenv().IY_LOADED = true end)
 --pcall(function() _G.IY_DEBUG = true end)
-
+--loadstring(game:HttpGet("https://raw.githubusercontent.com/RelkzzRebranded/Bypassed---OBFUSCATED..../main/Adonis%20BYPASS.lua"))()
 COREGUI = game:GetService("CoreGui")
 if not game:IsLoaded() then
     game.StarterGui:SetCore("SendNotification", { Title = "Infinite Yield Notification", Text = "Infinite Yield is waiting for the game to load!", Duration = 5 })
