@@ -4,8 +4,9 @@ if IY_LOADED and not _G.IY_DEBUG == true then
 end
 
 pcall(function() getgenv().IY_LOADED = true end)
---pcall(function() _G.IY_DEBUG = true end)
 --loadstring(game:HttpGet("https://raw.githubusercontent.com/RelkzzRebranded/Bypassed---OBFUSCATED..../main/Adonis%20BYPASS.lua"))()
+--pcall(function() _G.IY_DEBUG = true end)
+
 COREGUI = game:GetService("CoreGui")
 if not game:IsLoaded() then
     game.StarterGui:SetCore("SendNotification", { Title = "Infinite Yield Notification", Text = "Infinite Yield is waiting for the game to load!", Duration = 5 })
@@ -4759,6 +4760,10 @@ function GetInTable(Table, Name)
 		end
 	end
 	return false
+end
+
+local makewritable = makewriteable or function(tbl)
+    setreadonly(tbl,false)
 end
 
 function respawn(plr)
@@ -12242,7 +12247,11 @@ addcmd('physics', {'esper'}, function(args, speaker)
     notify('Loading. Hold on a sec.')
 	wait(.2)
     game:GetService("RunService").RenderStepped:Connect(function()
-    sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+		if sethidden then
+    		sethidden(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+		else
+			notify('Missing sethiddenproperty but command is still loading.')
+		end
     end)
     loadstring(game:HttpGet('https://pastebin.com/raw/6cfa5Wxa'))()
 end)
@@ -12275,22 +12284,28 @@ addcmd('GearVision', {'NightVision'}, function(args, speaker)
     end)
 end)
 
-addcmd('setgvkey', {'setnvkey'}, function(args, speaker) -- CAPITALIZE
-    local originalkey = getstring(1)
-    local upperkey = string.upper(originalkey)
-    gearkey = Enum.KeyCode[upperkey]
+addcmd('setgvkey', {'setnvkey'}, function(args, speaker)
+    local keyName = args[1]
+    local success, keyCode = pcall(function()
+        return Enum.KeyCode[keyName]
+    end)
+
+    if success and keyCode then
+        gearkey = keyCode
+    else
+        notify('Night Vision Key cannot be activated')
+    end
 end)
 
 
 
 
-addcmd('Identification Level-4', {''}, function(args, speaker)
+addcmd('ChangeID [Num]', {''}, function(args, speaker)
     local Players = game:GetService("Players")
-    local LocalPlayer = game.Players.LocalPlayer
-    game.Players.LocalPlayer["ID Card"].Handle.Id.Rank.Text = "Level-4"
+    local LocalPlayer = Players.LocalPlayer
+	LocalPlayer['ID Card'].Handle.Id.Rank.Text = "Level-" .. args[1]
+    -- game.Players.LocalPlayer["ID Card"].Handle.Id.Rank.Text = "Level-4"
 end)
-
-
 
 addcmd('highlight', {}, function(args, speaker)
 	local scps = {
@@ -12311,7 +12326,7 @@ addcmd('highlight', {}, function(args, speaker)
 			if scpObject then
 				highl.Parent = scpObject
 			else
-				notify('SCP is dead.')
+				notify('SCP' .. scpObject .. 'is dead.')
 			end
 		end
 	elseif args[1] and args[1] == 'all' then
@@ -12356,8 +12371,6 @@ addcmd('destroyhighlight', {''}, function(args, speaker)
         execCmd('destroyhighlight 173')
     end
 end)
-
-
 
 addcmd('Truniform', {''}, function(args, speaker)
     local player = game:GetService("Players").LocalPlayer
@@ -12446,7 +12459,7 @@ addcmd('RRHUniform', {''}, function(args, speaker)
     speaker.Character.Pants.PantsTemplate = "rbxassetid://11888150364"
 end)
 
-addcmd('CadeUniform', {''}, function(args, speaker)
+addcmd('DoASupervisorUni', {''}, function(args, speaker)
     speaker.Character.Shirt.ShirtTemplate = "rbxassetid://13696995425"
     speaker.Character.Pants.PantsTemplate = "rbxassetid://13696996659"
 end)
@@ -12631,7 +12644,7 @@ addcmd('SendMessage', {''}, function(args, speaker)
 	local message = me.PlayerGui:WaitForChild('HudGui')['#message']
 
 	message.TextTransparency = 0
-	message.Text = 'w'
+	message.Text = ''
 	wait(3) -- Wait for 3 seconds
 	while message.TextTransparency < 1 do
     	message.TextTransparency = message.TextTransparency + 0.1
