@@ -3,9 +3,9 @@ if IY_LOADED and not _G.IY_DEBUG == true then
 	return
 end
 
-pcall(function() getgenv().IY_LOADED = true end)
---loadstring(game:HttpGet("https://raw.githubusercontent.com/RelkzzRebranded/Bypassed---OBFUSCATED..../main/Adonis%20BYPASS.lua"))()
---pcall(function() _G.IY_DEBUG = true end)
+--pcall(function() getgenv().IY_LOADED = true end)
+----loadstring(game:HttpGet("https://raw.githubusercontent.com/RelkzzRebranded/Bypassed---OBFUSCATED..../main/Adonis%20BYPASS.lua"))()
+pcall(function() _G.IY_DEBUG = true end)
 
 COREGUI = game:GetService("CoreGui")
 if not game:IsLoaded() then
@@ -13,7 +13,7 @@ if not game:IsLoaded() then
     game.Loaded:Wait()
 end
 
-currentVersion = '5.9.3'
+currentVersion = '5.9.7'
 
 Players = game:GetService("Players")
 
@@ -1937,7 +1937,8 @@ gethidden = gethiddenproperty or get_hidden_property or get_hidden_prop
 queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
 httprequest = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
 PlaceId, JobId = game.PlaceId, game.JobId
-
+local IsOnMobile = table.find({Enum.Platform.IOS, Enum.Platform.Android}, UserInputService:GetPlatform())
+everyClipboard = setclipboard or toclipboard or set_clipboard or (Clipboard and Clipboard.set)
 function writefileExploit()
 	if writefile then
 		return true
@@ -4173,6 +4174,8 @@ end
 PlayerGui = Players.LocalPlayer:FindFirstChildOfClass("PlayerGui")
 local chatbox
 task.spawn(function()
+	if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then return end
+	local chatbox
 	local success, result = pcall(function() chatbox = game.WaitForChild(PlayerGui, "Chat").Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar end)
 	if success then
 		local function chatboxFocused()
@@ -4220,11 +4223,10 @@ task.spawn(function()
 				chatboxFocusLostC = chatbox.FocusLost:Connect(chatboxFocusLost)
 			end
 		end)
-		else
-		print('Custom chat detected. Will not provide suggestions for commands typed in the chat.')
+		--else
+		--print('Custom chat detected. Will not provide suggestions for commands typed in the chat.')
 	end
 end)
-
 function autoComplete(str,curText)
 	local endingChar = {"[", "/", "(", " "}
 	local stop = 0
@@ -4486,6 +4488,8 @@ CMDs[#CMDs + 1] = {NAME = 'unstareat / unstare [plr]', DESC = 'Disables stareat'
 CMDs[#CMDs + 1] = {NAME = 'rolewatch [group id] [role name]', DESC = 'Notify if someone from a watched group joins the server'}
 CMDs[#CMDs + 1] = {NAME = 'rolewatchstop / unrolewatch', DESC = 'Disable Rolewatch'}
 CMDs[#CMDs + 1] = {NAME = 'rolewatchleave', DESC = 'Toggle if you should leave the game if someone from a watched group joins the server'}
+CMDs[#CMDs + 1] = {NAME = 'staffwatch', DESC = 'Notify if a staff member of the game joins the server'}
+CMDs[#CMDs + 1] = {NAME = 'unstaffwatch', DESC = 'Disable Staffwatch'}
 CMDs[#CMDs + 1] = {NAME = 'attach [plr] (TOOL)', DESC = 'Attaches you to a player (YOU NEED A TOOL)'}
 CMDs[#CMDs + 1] = {NAME = 'kill [plr] (TOOL)', DESC = 'Kills a player (YOU NEED A TOOL)'}
 CMDs[#CMDs + 1] = {NAME = 'fastkill [plr] (TOOL)', DESC = 'Kills a player (less reliable) (YOU NEED A TOOL)'}
@@ -4496,6 +4500,8 @@ CMDs[#CMDs + 1] = {NAME = 'teleport / tp [plr] [plr] (TOOL)', DESC = 'Teleports 
 CMDs[#CMDs + 1] = {NAME = 'fastteleport / fasttp [plr] [plr] (TOOL)', DESC = 'Teleports a player to another player (less reliable) (YOU NEED A TOOL)'}
 CMDs[#CMDs + 1] = {NAME = 'fling', DESC = 'Flings anyone you touch'}
 CMDs[#CMDs + 1] = {NAME = 'unfling', DESC = 'Disables the fling command'}
+CMDs[#CMDs + 1] = {NAME = 'flyfling', DESC = 'Basically the invisfling command but not invisible'}
+CMDs[#CMDs + 1] = {NAME = 'unflyfling', DESC = 'Disables the flyfling command'}
 CMDs[#CMDs + 1] = {NAME = 'invisfling', DESC = 'Enables invisible fling'}
 CMDs[#CMDs + 1] = {NAME = 'loopoof', DESC = 'Loops everyones character sounds (everyone can hear)'}
 CMDs[#CMDs + 1] = {NAME = 'unloopoof', DESC = 'Stops the oof chaos'}
@@ -4646,6 +4652,9 @@ CMDs[#CMDs + 1] = {NAME = 'norender', DESC = 'Disable 3d Rendering to decrease t
 CMDs[#CMDs + 1] = {NAME = 'render', DESC = 'Enable 3d Rendering'}
 CMDs[#CMDs + 1] = {NAME = 'use2022materials / 2022materials', DESC = 'Enables 2022 material textures'}
 CMDs[#CMDs + 1] = {NAME = 'unuse2022materials / un2022materials', DESC = 'Disables 2022 materialtextures'}
+CMDs[#CMDs + 1] = {NAME = 'promptr6', DESC = 'Prompts the game to switch your rig type to R6'}
+CMDs[#CMDs + 1] = {NAME = 'promptr15', DESC = 'Prompts the game to switch your rig type to R15'}
+CMDs[#CMDs + 1] = {NAME = 'wallwalk / walkonwalls', DESC = 'Walk on walls'}
 CMDs[#CMDs + 1] = {NAME = '', DESC = ''}
 CMDs[#CMDs + 1] = {NAME = 'Custom Commands', DESC = ''}
 CMDs[#CMDs + 1] = {NAME = '', DESC = ''}
@@ -4689,16 +4698,16 @@ for i = 1, #CMDs do
 	newcmd.Parent = CMDsF
 	newcmd.Visible = false
 	newcmd.Text = CMDs[i].NAME
-	newcmd.Name = 'CMD'
-	table.insert(text1,newcmd)
-	if CMDs[i].DESC ~= '' then
+	newcmd.Name = "CMD"
+	table.insert(text1, newcmd)
+	if CMDs[i].DESC ~= "" then
 		newcmd:SetAttribute("Title", CMDs[i].NAME)
 		newcmd:SetAttribute("Desc", CMDs[i].DESC)
 		newcmd.MouseButton1Down:Connect(function()
-			if newcmd.Visible and newcmd.TextTransparency == 0 then
+			if not IsOnMobile and newcmd.Visible and newcmd.TextTransparency == 0 then
 				local currentText = Cmdbar.Text
 				Cmdbar:CaptureFocus()
-				autoComplete(newcmd.Text,currentText)
+				autoComplete(newcmd.Text, currentText)
 				maximizeHolder()
 			end
 		end)
@@ -11344,6 +11353,19 @@ addcmd('togglefling',{},function(args, speaker)
 		execCmd('fling')
 	end
 end)
+addcmd("flyfling", {}, function(args, speaker)
+    execCmd("unvehiclefly\\unfling\\unnoclip")
+    wait()
+    execCmd("vehiclefly\\fling\\noclip")
+end)
+
+addcmd("unflyfling", {}, function(args, speaker)
+    execCmd("unvehiclefly\\unfling\\unnoclip\\breakvelocity")
+end)
+
+addcmd("toggleflyfling", {}, function(args, speaker)
+    execCmd(flinging and "unflyfling" or "flyfling")
+end)
 
 addcmd('invisfling',{},function(args, speaker)
 	local ch = speaker.Character
@@ -11859,8 +11881,8 @@ addcmd('unstareat',{'unstare','nostare','nostareat'},function(args, speaker)
 	end
 end)
 
-local RolewatchData = {["Group"]=0,["Role"]="",["Leave"]=false}
-local RolewatchConnection = Players.PlayerAdded:Connect(function(player)
+RolewatchData = {Group = 0, Role = "", Leave = false}
+RolewatchConnection = Players.PlayerAdded:Connect(function(player)
 	if RolewatchData.Group == 0 then return end
 	if player:IsInGroup(RolewatchData.Group) then
 		if tostring(player:GetRoleInGroup(RolewatchData.Group)):lower() == RolewatchData.Role:lower() then
@@ -11873,25 +11895,74 @@ local RolewatchConnection = Players.PlayerAdded:Connect(function(player)
 	end
 end)
 
-addcmd('rolewatch',{},function(args, speaker)
-	local groupid = args[1] or 0
-	if isNumber(groupid) then
-		if args[2] then
-			local rolename = tostring(getstring(2))
-			RolewatchData.Group = tonumber(groupid)
-			RolewatchData.Role = rolename
-			notify("Rolewatch", "Watching Group ID \"" .. tostring(groupid) .. "\" for Role \"" .. rolename .. "\"")
-		end
-	end
+addcmd("rolewatch", {}, function(args, speaker)
+    local groupId = tonumber(args[1] or 0)
+    local roleName = args[2] and tostring(getstring(2))
+    if groupId and roleName then
+        RolewatchData.Group = groupId
+        RolewatchData.Role = roleName
+        notify("Rolewatch", "Watching Group ID \"" .. tostring(groupId) .. "\" for Role \"" .. roleName .. "\"")
+    end
 end)
 
-addcmd('rolewatchstop',{},function(args, speaker)
-	RolewatchData = {["Group"]=0,["Role"]="",["Leave"]=false}
+addcmd("rolewatchstop", {}, function(args, speaker)
+    RolewatchData.Group = 0
+    RolewatchData.Role = ""
+    RolewatchData.Leave = false
+    notify("Rolewatch", "Disabled")
 end)
 
-addcmd('rolewatchleave',{'unrolewatch'},function(args, speaker)
-	RolewatchData.Leave = not RolewatchData.Leave
-	notify("Rolewatch", RolewatchData.Leave and "Leave has been Enabled" or "Leave has been Disabled")
+addcmd("rolewatchleave", {"unrolewatch"}, function(args, speaker)
+    RolewatchData.Leave = not RolewatchData.Leave
+    notify("Rolewatch", RolewatchData.Leave and "Leave has been Enabled" or "Leave has been Disabled")
+end)
+
+staffRoles = {"mod", "moderator", "Moderador", "Administrator", "admin", "staff", "dev", "founder", "owner", "supervis", "manager", "management", "executive", "president", "chairman", "chairwoman", "chairperson", "director"}
+
+getStaffRole = function(player)
+    local playerRole = player:GetRoleInGroup(game.CreatorId)
+    local result = {Role = playerRole, Staff = false}
+    for _, role in pairs(staffRoles) do
+        if string.find(string.lower(playerRole), role) then
+            result.Staff = true
+        end
+    end
+    return result
+end
+
+addcmd("staffwatch", {}, function(args, speaker)
+    if staffwatchjoin then
+        staffwatchjoin:Disconnect()
+    end
+    if game.CreatorType == Enum.CreatorType.Group then
+        local found = {}
+        staffwatchjoin = Players.PlayerAdded:Connect(function(player)
+            local result = getStaffRole(player)
+            if result.Staff then
+                notify("Staffwatch", formatUsername(player) .. " is a " .. result.Role)
+            end
+        end)
+        for _, player in pairs(Players:GetPlayers()) do
+            local result = getStaffRole(player)
+            if result.Staff then
+                table.insert(found, formatUsername(player) .. " is a " .. result.Role)
+            end
+        end
+        if #found > 0 then
+            notify("Staffwatch", table.concat(found, ",\n"))
+        else
+            notify("Staffwatch", "Enabled")
+        end
+    else
+        notify("Staffwatch", "Game is not owned by a Group")
+    end
+end)
+
+addcmd("unstaffwatch", {}, function(args, speaker)
+    if staffwatchjoin then
+        staffwatchjoin:Disconnect()
+    end
+    notify("Staffwatch", "Disabled")
 end)
 
 addcmd('removeterrain',{'rterrain','noterrain'},function(args, speaker)
@@ -12293,14 +12364,14 @@ addcmd('setgvkey', {'setnvkey'}, function(args, speaker)
     if success and keyCode then
         gearkey = keyCode
     else
-        notify('Night Vision Key cannot be activated')
+        notify('Night Vision Key cannot be activated {ERR_1}')
     end
 end)
 
 
 
 
-addcmd('ChangeID [Num]', {''}, function(args, speaker)
+addcmd('ChangeID [S19]', {''}, function(args, speaker)
     local Players = game:GetService("Players")
     local LocalPlayer = Players.LocalPlayer
 	LocalPlayer['ID Card'].Handle.Id.Rank.Text = "Level-" .. args[1]
@@ -12326,7 +12397,7 @@ addcmd('highlight', {}, function(args, speaker)
 			if scpObject then
 				highl.Parent = scpObject
 			else
-				notify('SCP' .. scpObject .. 'is dead.')
+				notify('SCP is dead.')
 			end
 		end
 	elseif args[1] and args[1] == 'all' then
@@ -12459,7 +12530,7 @@ addcmd('RRHUniform', {''}, function(args, speaker)
     speaker.Character.Pants.PantsTemplate = "rbxassetid://11888150364"
 end)
 
-addcmd('DoASupervisorUni', {''}, function(args, speaker)
+addcmd('CadeUniform', {''}, function(args, speaker)
     speaker.Character.Shirt.ShirtTemplate = "rbxassetid://13696995425"
     speaker.Character.Pants.PantsTemplate = "rbxassetid://13696996659"
 end)
@@ -12651,6 +12722,54 @@ addcmd('SendMessage', {''}, function(args, speaker)
     	wait(0.1)
 	end
 end)
+addcmd("wallwalk", {"walkonwalls"}, function(args, speaker)
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/infyiff/backup/main/wallwalker.lua"))()
+end)
+
+promptNewRig = function(speaker, rig)
+	local humanoid = speaker.Character:FindFirstChildWhichIsA("Humanoid")
+	if humanoid then
+		AvatarEditorService:PromptSaveAvatar(humanoid.HumanoidDescription, Enum.HumanoidRigType[rig])
+		local result = AvatarEditorService.PromptSaveAvatarCompleted:Wait()
+		if result == Enum.AvatarPromptResult.Success then
+			execCmd("reset")
+		end
+	end
+end
+addcmd("promptr6", {}, function(args, speaker)
+	promptNewRig(speaker, "R6")
+end)
+
+addcmd("promptr15", {}, function(args, speaker)
+	promptNewRig(speaker, "R15")
+end)
+
+if IsOnMobile then
+	local QuickCapture = Instance.new("TextButton")
+	local UICorner = Instance.new("UICorner")
+	QuickCapture.Name = randomString()
+	QuickCapture.Parent = PARENT
+	QuickCapture.BackgroundColor3 = Color3.fromRGB(46, 46, 47)
+	QuickCapture.BackgroundTransparency = 0.14
+	QuickCapture.Position = UDim2.new(0.489, 0, 0, 0)
+	QuickCapture.Size = UDim2.new(0, 32, 0, 33)
+	QuickCapture.Font = Enum.Font.SourceSansBold
+	QuickCapture.Text = "IY"
+	QuickCapture.TextColor3 = Color3.fromRGB(255, 255, 255)
+	QuickCapture.TextSize = 20.000
+	QuickCapture.TextWrapped = true
+	QuickCapture.Draggable = true
+	UICorner.Name = randomString()
+	UICorner.CornerRadius = UDim.new(0.5, 0)
+	UICorner.Parent = QuickCapture
+	QuickCapture.MouseButton1Click:Connect(function()
+		Cmdbar:CaptureFocus()
+		maximizeHolder()
+	end)
+	table.insert(shade1, QuickCapture)
+	table.insert(text1, QuickCapture)
+end
+
 updateColors(currentShade1,shade1)
 updateColors(currentShade2,shade2)
 updateColors(currentShade3,shade3)
