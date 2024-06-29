@@ -5,7 +5,7 @@ end
 
 --pcall(function() getgenv().IY_LOADED = true end)
 ----loadstring(game:HttpGet("https://raw.githubusercontent.com/RelkzzRebranded/Bypassed---OBFUSCATED..../main/Adonis%20BYPASS.lua"))()
-pcall(function() _G.IY_DEBUG = true end)
+pcall(function() _G.IY_DEBUG = false end)
 
 COREGUI = game:GetService("CoreGui")
 if not game:IsLoaded() then
