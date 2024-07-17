@@ -3,7 +3,7 @@ if IY_LOADED and not _G.IY_DEBUG == true then
 	return
 end
 
---pcall(function() getgenv().IY_LOADED = true end)
+pcall(function() getgenv().IY_LOADED = true end)
 ----loadstring(game:HttpGet("https://raw.githubusercontent.com/RelkzzRebranded/Bypassed---OBFUSCATED..../main/Adonis%20BYPASS.lua"))()
 pcall(function() _G.IY_DEBUG = false end)
 
@@ -12315,15 +12315,7 @@ end)
 
 
 addcmd('physics', {'esper'}, function(args, speaker)
-    notify('Loading. Hold on a sec.')
-	wait(.2)
-    game:GetService("RunService").RenderStepped:Connect(function()
-		if sethidden then
-    		sethidden(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-		else
-			notify('Missing sethiddenproperty but command is still loading.')
-		end
-    end)
+    notify('Loading, wait a few seconds.')
     loadstring(game:HttpGet('https://pastebin.com/raw/6cfa5Wxa'))()
 end)
 
