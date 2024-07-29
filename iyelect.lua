@@ -4483,6 +4483,8 @@ CMDs[#CMDs + 1] = {NAME = 'walkto / follow [plr]', DESC = 'Follow a player'}
 CMDs[#CMDs + 1] = {NAME = 'pathfindwalkto / pathfindfollow [plr]', DESC = 'Follow a player using pathfinding'}
 CMDs[#CMDs + 1] = {NAME = 'pathfindwalktowaypoint / pathfindwalktowp [waypoint]', DESC = 'Walk to a waypoint using pathfinding'}
 CMDs[#CMDs + 1] = {NAME = 'unwalkto / unfollow', DESC = 'Stops following a player'}
+CMDs[#CMDs + 1] = {NAME = 'orbit [player] [speed] [distance]', DESC = 'Makes your character orbit around a player with an optional speed and an optional distance'}
+CMDs[#CMDs + 1] = {NAME = 'unorbit', DESC = 'Disables orbit'}
 CMDs[#CMDs + 1] = {NAME = 'stareat / stare [plr]', DESC = 'Stare / look at a player'}
 CMDs[#CMDs + 1] = {NAME = 'unstareat / unstare [plr]', DESC = 'Disables stareat'}
 CMDs[#CMDs + 1] = {NAME = 'rolewatch [group id] [role name]', DESC = 'Notify if someone from a watched group joins the server'}
@@ -4502,7 +4504,11 @@ CMDs[#CMDs + 1] = {NAME = 'fling', DESC = 'Flings anyone you touch'}
 CMDs[#CMDs + 1] = {NAME = 'unfling', DESC = 'Disables the fling command'}
 CMDs[#CMDs + 1] = {NAME = 'flyfling', DESC = 'Basically the invisfling command but not invisible'}
 CMDs[#CMDs + 1] = {NAME = 'unflyfling', DESC = 'Disables the flyfling command'}
+CMDs[#CMDs + 1] = {NAME = 'walkfling', DESC = 'Basically fling but no spinning'}
+CMDs[#CMDs + 1] = {NAME = 'unwalkfling / nowalkfling', DESC = 'Disables walkfling'}
 CMDs[#CMDs + 1] = {NAME = 'invisfling', DESC = 'Enables invisible fling'}
+CMDs[#CMDs + 1] = {NAME = 'antifling', DESC = 'Disables player collisions to prevent you from being flung'}
+CMDs[#CMDs + 1] = {NAME = 'unantifling', DESC = 'Disables antifling'}
 CMDs[#CMDs + 1] = {NAME = 'loopoof', DESC = 'Loops everyones character sounds (everyone can hear)'}
 CMDs[#CMDs + 1] = {NAME = 'unloopoof', DESC = 'Stops the oof chaos'}
 CMDs[#CMDs + 1] = {NAME = 'muteboombox [plr]', DESC = 'Mutes someones boombox'}
@@ -4597,6 +4603,7 @@ CMDs[#CMDs + 1] = {NAME = 'noanim', DESC = 'Disables your animations'}
 CMDs[#CMDs + 1] = {NAME = 'reanim', DESC = 'Restores your animations'}
 CMDs[#CMDs + 1] = {NAME = 'animspeed [num]', DESC = 'Changes the speed of your current animation'}
 CMDs[#CMDs + 1] = {NAME = 'copyanimation / copyanim / copyemote [plr]', DESC = 'Copies someone elses animation'}
+CMDs[#CMDs + 1] = {NAME = 'copyanimationid / copyanimid / copyemoteid [player]', DESC = 'Copies your animation id or someone elses to your clipboard'}
 CMDs[#CMDs + 1] = {NAME = 'loopanimation / loopanim', DESC = 'Loops your current animation'}
 CMDs[#CMDs + 1] = {NAME = 'stopanimations / stopanims', DESC = 'Stops running animations'}
 CMDs[#CMDs + 1] = {NAME = 'refreshanimations / refreshanims', DESC = 'Refreshes animations'}
@@ -9742,7 +9749,7 @@ end)
 
 addcmd('tpposition',{'tppos'},function(args, speaker)
 	if #args < 3 then return end
-	local tpX,tpY,tpZ = tonumber(args[1]),tonumber(args[2]),tonumber(args[3])
+	local tpX,tpY,tpZ = tonumber((args[1]:gsub(",", ""))),tonumber((args[2]:gsub(",", ""))),tonumber((args[3]:gsub(",", "")))
 	local char = speaker.Character
 	if char and getRoot(char) then
 		getRoot(char).CFrame = CFrame.new(tpX,tpY,tpZ)
@@ -12536,6 +12543,7 @@ addcmd('notifyhp', {''}, function(args, speaker)
 end)
 
 addcmd('config', {'configuration'}, function(args, speaker)
+	if sethidden then
     if args[1] == "1" and game.PlaceId == 1440936008 then
         for i,v in pairs(getgc(true)) do
             if type(v) == 'table' and rawget(v, 'Spread') then
@@ -12587,9 +12595,10 @@ addcmd('config', {'configuration'}, function(args, speaker)
         notify('You are not in a supported game')
     elseif args[1] == "0" then
         notify("Configuration does not exist..")
-    else
-        notify('Configuration not found. Restarting..')
     end
+else
+	notify("sethiddenproperty not found, cmd will not activate.")
+end
 end)
 
 addcmd('S19GUI', {''}, function(args, speaker)
@@ -12736,6 +12745,149 @@ addcmd("promptr15", {}, function(args, speaker)
 	promptNewRig(speaker, "R15")
 end)
 
+addcmd("copyanimationid", {"copyanimid", "copyemoteid"}, function(args, speaker)
+    local copyAnimId = function(player)
+        local found = "Animations Copied"
+
+        for _, v in pairs(player.Character:FindFirstChildWhichIsA("Humanoid"):GetPlayingAnimationTracks()) do
+            local animationId = v.Animation.AnimationId
+            local assetId = animationId:find("rbxassetid://") and animationId:match("%d+")
+
+            if not string.find(animationId, "507768375") and not string.find(animationId, "180435571") then
+                if assetId then
+                    local success, result = pcall(function()
+                        return MarketplaceService:GetProductInfo(tonumber(assetId)).Name
+                    end)
+                    local name = success and result or "Failed to get name"
+                    found = found .. "\n\nName: " .. name .. "\nAnimation Id: " .. animationId
+                else
+                    found = found .. "\n\nAnimation Id: " .. animationId
+                end
+            end
+        end
+
+        if found ~= "Animations Copied" then
+            toClipboard(found)
+        else
+            notify("Animations", "No animations to copy")
+        end
+    end
+
+    if args[1] then
+        copyAnimId(Players[getPlayer(args[1], speaker)[1]])
+    else
+        copyAnimId(speaker)
+    end
+end)
+addcmd("antifling", {}, function(args, speaker)
+    if antifling then
+        antifling:Disconnect()
+        antifling = nil
+    end
+    antifling = RunService.Stepped:Connect(function()
+        for _, player in pairs(Players:GetPlayers()) do
+            if player ~= speaker and player.Character then
+                for _, v in pairs(player.Character:GetDescendants()) do
+                    if v:IsA("BasePart") then
+                        v.CanCollide = false
+                    end
+                end
+            end
+        end
+    end)
+end)
+
+addcmd("unantifling", {}, function(args, speaker)
+    if antifling then
+        antifling:Disconnect()
+        antifling = nil
+    end
+end)
+
+addcmd("toggleantifling", {}, function(args, speaker)
+    execCmd(antifling and "unantifling" or "antifling")
+end)
+
+addcmd("orbit", {}, function(args, speaker)
+    execCmd("unorbit nonotify")
+    local target = Players:FindFirstChild(getPlayer(args[1], speaker)[1])
+    local root = getRoot(speaker.Character)
+    local humanoid = speaker.Character:FindFirstChildWhichIsA("Humanoid")
+    if target and target.Character and getRoot(target.Character) and root and humanoid then
+        local rotation = 0
+        local speed = tonumber(args[2]) or 0.2
+        local distance = tonumber(args[3]) or 6
+        orbit1 = RunService.Heartbeat:Connect(function()
+            pcall(function()
+                rotation = rotation + speed
+                root.CFrame = CFrame.new(getRoot(target.Character).Position) * CFrame.Angles(0, math.rad(rotation), 0) * CFrame.new(distance, 0, 0)
+            end)
+        end)
+        orbit2 = RunService.RenderStepped:Connect(function()
+            pcall(function()
+                root.CFrame = CFrame.new(root.Position, getRoot(target.Character).Position)
+            end)
+        end)
+        orbit3 = humanoid.Died:Connect(function() execCmd("unorbit") end)
+        orbit4 = humanoid.Seated:Connect(function(value) if value then execCmd("unorbit") end end)
+        notify("Orbit", "Started orbiting " .. formatUsername(target))
+    end
+end)
+
+addcmd("unorbit", {}, function(args, speaker)
+    if orbit1 then orbit1:Disconnect() end
+    if orbit2 then orbit2:Disconnect() end
+    if orbit3 then orbit3:Disconnect() end
+    if orbit4 then orbit4:Disconnect() end
+    if args[1] ~= "nonotify" then notify("Orbit", "Stopped orbiting player") end
+end)
+walkflinging = false
+addcmd("walkfling", {}, function(args, speaker)
+    execCmd("unwalkfling")
+    local humanoid = speaker.Character:FindFirstChildWhichIsA("Humanoid")
+    if humanoid then
+        humanoid.Died:Connect(function()
+            execCmd("unwalkfling")
+        end)
+    end
+
+    execCmd("noclip")
+    walkflinging = true
+    repeat RunService.Heartbeat:Wait()
+        local character = speaker.Character
+        local root = getRoot(character)
+        local vel, movel = nil, 0.1
+
+        while not (character and character.Parent and root and root.Parent) do
+            RunService.Heartbeat:Wait()
+            character = speaker.Character
+            root = getRoot(character)
+        end
+
+        vel = root.Velocity
+        root.Velocity = vel * 1000000 + Vector3.new(0, 1000000, 0)
+
+        RunService.RenderStepped:Wait()
+        if character and character.Parent and root and root.Parent then
+            root.Velocity = vel
+        end
+
+        RunService.Stepped:Wait()
+        if character and character.Parent and root and root.Parent then
+            root.Velocity = vel + Vector3.new(0, movel, 0)
+            movel = movel * -1
+        end
+    until walkflinging == false
+end)
+
+addcmd("unwalkfling", {"nowalkfling"}, function(args, speaker)
+    walkflinging = false
+    execCmd("unnoclip")
+end)
+
+addcmd("togglewalkfling", {}, function(args, speaker)
+    execCmd(walkflinging and "unwalkfling" or "walkfling")
+end)
 if IsOnMobile then
 	local QuickCapture = Instance.new("TextButton")
 	local UICorner = Instance.new("UICorner")
