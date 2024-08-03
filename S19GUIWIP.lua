@@ -30,7 +30,7 @@ local sections = {
 }
 
 for sectionName, sectionDisplayName in pairs(sections) do
-    sections[sectionName] = Forums:NewSection(sectionDisplayName)
+    sections[sectionName] = Forums:NewButton(sectionDisplayName)
 end
 local u1 = Vector3.new(0, 3, 0)
 local speaker = game.Players.LocalPlayer
