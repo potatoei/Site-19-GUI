@@ -29,6 +29,9 @@ local sections = {
     misc = "Misc"
 }
 
+
+local main = Forums:NewSection('Pickups (OPEN THIS)')
+
 for sectionName, sectionDisplayName in pairs(sections) do
     sections[sectionName] = Forums:NewButton(sectionDisplayName)
 end
@@ -45,8 +48,8 @@ local items = {
 }
 
 
-local function create(section, item)
-	section:NewButton("Pickup", function()
+local function create(item)
+	main:NewButton(item, function()
 		local children = workspace.Ignore.Pickups[item]:GetChildren()
        		if #children > 0 then
             		local randomChild = children[math.random(1, #children)]
@@ -59,7 +62,7 @@ local function create(section, item)
 	end)
 end
 for i,itemData in pairs(items) do
-	create(itemData.section, itemData.name)
+	create(itemData.name)
 end
 
 candy:NewButton('Candy', function()
