@@ -38,7 +38,7 @@ local items = {
     { section = sections.shield, name = 'Shield' },
     { section = sections.keycha, name = 'Keychains' },
     { section = sections.keyca, name = 'Keycards' },
-    { section = sections.G22, name = "Glock 22" },
+    { section = sections.G22, name = "Glock22" },
     { section = sections.brush, name = "Brush" },
     { section = sections.vest, name = "Vest" },
     { section = sections.med, name = "Medkit" },
