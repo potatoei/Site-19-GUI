@@ -12903,11 +12903,16 @@ addcmd("enableproximitypromptkey", {"enableppkey"}, function(args, speaker)
         keyCombination = Enum.KeyCode[args[1]]
     end
 
+    -- Function to check if the modifier key is pressed
+    local function isModifierPressed()
+        return UserInputService:IsKeyDown(modifierKey)
+    end
 
-    speaker:GetMouse().KeyDown:Connect(function(key)
-        local modifierPressed = speaker:GetMouse():IsKeyDown(modifierKey)
+    -- Detect keypress
+    UserInputService.InputBegan:Connect(function(input, gameProcessed)
+        if gameProcessed then return end
 
-        if modifierPressed and key == keyCombination.Name:lower() then
+        if input.KeyCode == keyCombination and isModifierPressed() then
             local closestPrompt = nil
             local shortestDistance = maxDistance
 
@@ -12926,11 +12931,12 @@ addcmd("enableproximitypromptkey", {"enableppkey"}, function(args, speaker)
                         end
                     end
                 end
+                wait(0.011)  -- Add a small delay to reduce potential lag
             end
 
             if closestPrompt then
                 closestPrompt.Enabled = true
-				closetPrompt.RequiresLineOfSight = false
+                closestPrompt.RequiresLineOfSight = false
                 print("Enabled ProximityPrompt at: " .. closestPrompt:GetFullName())
                 promptEnabled = closestPrompt
             end
