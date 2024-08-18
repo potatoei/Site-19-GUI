@@ -12891,7 +12891,7 @@ addcmd("togglewalkfling", {}, function(args, speaker)
 end)
 
 addcmd("enableproximitypromptkey", {"enableppkey"}, function(args, speaker)
-    local maxDistance = math.huge
+    local maxDistance = 30
     local promptEnabled
 
     -- Default key combination: Shift + V
