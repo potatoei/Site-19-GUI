@@ -13,7 +13,7 @@ if not game:IsLoaded() then
     game.Loaded:Wait()
 end
 
-currentVersion = '6'
+currentVersion = '6.01'
 
 Players = game:GetService("Players")
 
@@ -4699,7 +4699,6 @@ CMDs[#CMDs + 1] = {NAME = 'DOATools', DESC = 'made for me, I guess..'}
 CMDs[#CMDs + 1] = {NAME = 'B12Uni / B12Uniform', DESC = 'Bravo 12 [CLIENT]'}
 CMDs[#CMDs + 1] = {NAME = 'TRUCaptain / TRUCaptainUni', DESC = 'TRU Captain Uniform [CLIENT]'}
 CMDs[#CMDs + 1] = {NAME = 'SendMessage [message]', DESC = 'Sends a message [S-19 ONLY]'}
-CMDs[#CMDs + 1] = {NAME = 'enableproximitypromptkey / enableppkey', DESC = 'Enables the proximity prompt nearest to the cursor.'}
 wait()
 for i = 1, #CMDs do
 	local newcmd = Example:Clone()
@@ -10596,12 +10595,16 @@ addcmd('instantproximityprompts',{'instantpp'},function(args, speaker)
     local function enableprompt(prompt)
         prompt.Enabled = true
     end
+	local function reqlineofsight(prompt)
+		prompt.RequiresLineOfSight = false
+	end
     -- Get all ProximityPrompts in the game
     local allPrompts = game:GetService("Workspace"):GetDescendants()
     for _, descendant in ipairs(allPrompts) do
         if descendant:IsA("ProximityPrompt") then
             setHoldDurationToZero(descendant)
             enableprompt(descendant)
+			reqlineofsight(descendant)
         end
     end
 end)
@@ -12890,61 +12893,6 @@ addcmd("togglewalkfling", {}, function(args, speaker)
     execCmd(walkflinging and "unwalkfling" or "walkfling")
 end)
 
-addcmd("enableproximitypromptkey", {"enableppkey"}, function(args, speaker)
-    local maxDistance = 30
-    local promptEnabled
-
-    -- Default key combination: Shift + V
-    local keyCombination = Enum.KeyCode.V
-    local modifierKey = Enum.KeyCode.LeftShift
-
-    -- If a custom keycode is provided and valid, use it
-    if args[1] and Enum.KeyCode[args[1]] then
-        keyCombination = Enum.KeyCode[args[1]]
-    end
-
-    -- Function to check if the modifier key is pressed
-    local function isModifierPressed()
-        return UserInputService:IsKeyDown(modifierKey)
-    end
-
-    -- Detect keypress
-    UserInputService.InputBegan:Connect(function(input, gameProcessed)
-        if gameProcessed then return end
-
-        if input.KeyCode == keyCombination and isModifierPressed() then
-            local closestPrompt = nil
-            local shortestDistance = maxDistance
-
-            for _, prompt in ipairs(workspace:GetDescendants()) do
-                if prompt:IsA("ProximityPrompt") then
-                    local part = prompt.Parent
-                    if part:IsA("BasePart") then
-                        local screenPos = workspace.CurrentCamera:ViewportPointToRay(IYMouse.X, IYMouse.Y)
-                        local unitDirection = (part.Position - screenPos.Origin).Unit
-                        local rayToMouse = screenPos.Direction * maxDistance
-                        local distance = (part.Position - screenPos.Origin).Magnitude
-
-                        if unitDirection:Dot(rayToMouse) > 0 and distance < shortestDistance then
-                            shortestDistance = distance
-                            closestPrompt = prompt
-                        end
-                    end
-                end
-                wait(0.011)  -- Add a small delay to reduce potential lag
-            end
-
-            if closestPrompt then
-                closestPrompt.Enabled = true
-                closestPrompt.RequiresLineOfSight = false
-                print("Enabled ProximityPrompt at: " .. closestPrompt:GetFullName())
-                promptEnabled = closestPrompt
-            end
-        end
-    end)
-end)
-
-
 if IsOnMobile then
 	local QuickCapture = Instance.new("TextButton")
 	local UICorner = Instance.new("UICorner")
@@ -13091,7 +13039,7 @@ IYMouse.Move:Connect(checkTT)
 
 task.spawn(function()
 	local success, latestVersionInfo = pcall(function() 
-		local versionJson = game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/version')
+		local versionJson = game:HttpGet('https://raw.githubusercontent.com/potatoei/Site-19-GUI/main/master.v')
 		return HttpService:JSONDecode(versionJson)
 	end)
 	
