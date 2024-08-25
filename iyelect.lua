@@ -4716,7 +4716,8 @@ CMDs[#CMDs + 1] = {NAME = '096HP', DESC = 'Shows 096 HP'}
 CMDs[#CMDs + 1] = {NAME = '173HP', DESC = 'Shows 173 Body Health'}
 CMDs[#CMDs + 1] = {NAME = '682HP', DESC = 'Shows 682 HP'}
 CMDs[#CMDs + 1] = {NAME = 'physics / esper', DESC = 'Grabs a physics gun'}
-CMDs[#CMDs + 1] = {NAME = 'newesp', DESC = 'Loads unnamed esp'}
+CMDs[#CMDs + 1] = {NAME = 'newesp', DESC = 'Loads new esp from IY Reborn (Needs Drawing)'}
+CMDs[#CMDs + 1] = {NAME = 'unnewesp', DESC = 'Removes new esp from IY Reborn'}
 CMDs[#CMDs + 1] = {NAME = 'GearVision / NightVision', DESC = 'Makes you have Gear Vision'}
 CMDs[#CMDs + 1] = {NAME = 'Identification Level-4', DESC = 'Makes you Level-4'}
 CMDs[#CMDs + 1] = {NAME = 'highlight [173,049,106,096]', DESC = 'highlight SCPs. 096, 049, 106, 173, all'}
@@ -12431,21 +12432,43 @@ function createESP(player)
 	cachedESP[player] = espitems
 end
 
-addcmd('newesp', {''}, function(args, speaker)
-	if ESPenabled then return end
-	ESPenabled = true
-	for _, plr in next, Players:GetPlayers() do
-		if plr ~= speaker then
-			createESP(plr.Name)
+function removeESP(player)
+	if rawget(cachedESP, player) then
+		for _, drawing in next, cachedESP[player] do
+			drawing:Remove();
 		end
+		cachedESP[player] = nil;
 	end
-	RunService:BindToRenderStep("iyresp", Enum.RenderPriority.Camera.Value, function()
-		for plr, drawing in pairs(cachedESP) do
-			if plr ~= speaker and drawing ~= nil then
-				updateESP(plr, drawing)
-			end
-		end
-	end)
+end
+
+addcmd('newesp', {''}, function(args, speaker)
+    if ESPenabled then return end
+    ESPenabled = true
+    for _, plr in next, Players:GetPlayers() do
+        if plr ~= speaker then
+            createESP(plr.Name)
+        end
+    end
+    
+    spawn(function()
+        while ESPenabled do
+            for plr, drawing in pairs(cachedESP) do
+                if plr ~= speaker and drawing ~= nil then
+                    updateESP(plr, drawing)
+                end
+            end
+            wait(0.03)
+        end
+    end)
+end)
+
+addcmd('unnewesp', {''}, function(args, speaker)
+    ESPenabled = false
+    for _, plr in pairs(Players:GetPlayers()) do
+        if plr ~= speaker then
+            removeESP(plr.Name)
+        end
+    end
 end)
 
 local gearkey = Enum.KeyCode.N
@@ -12474,7 +12497,7 @@ end)
 addcmd('setgvkey', {'setnvkey'}, function(args, speaker)
     local keyName = args[1]
     local success, keyCode = pcall(function()
-        return Enum.KeyCode[keyName]
+        return Enum.KeyCode[keyName]:lower()
     end)
 
     if success and keyCode then
@@ -12482,16 +12505,6 @@ addcmd('setgvkey', {'setnvkey'}, function(args, speaker)
     else
         notify('Night Vision Key cannot be activated {ERR_1}')
     end
-end)
-
-
-
-
-addcmd('ChangeID [S19]', {''}, function(args, speaker)
-    local Players = game:GetService("Players")
-    local LocalPlayer = Players.LocalPlayer
-	LocalPlayer['ID Card'].Handle.Id.Rank.Text = "Level-" .. args[1]
-    -- game.Players.LocalPlayer["ID Card"].Handle.Id.Rank.Text = "Level-4"
 end)
 
 addcmd('highlight', {}, function(args, speaker)
