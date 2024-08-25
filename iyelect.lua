@@ -2086,6 +2086,49 @@ function dragGUI(gui)
 	end)
 end
 
+function updateESP(player, esp)
+	local char = Players:FindFirstChild(player) and Players:FindFirstChild(player).Character
+	if char then
+		local cframe = char:GetModelCFrame() --rarely used wtf
+		local position, visible, depth = wtvp(cframe.Position)
+		esp.box.Visible = visible
+		esp.boxl.Visible = visible
+		esp.healthbar.Visible = visible
+		esp.healthbarl.Visible = visible
+		esp.name.Visible = visible
+		esp.distance.Visible = visible
+		if cframe and visible then
+			local sf = 1 / (depth * math.tan(math.rad(Camera.FieldOfView / 2)) * 2) * 1000
+			local w, h = round2(4 * sf, 5 * sf)
+			local x, y = round2(position.X, position.Y)
+			esp.box.Size = Vector2.new(w,h)
+			esp.box.Position = Vector2.new(round2(x - w / 2, y - h / 2))
+			esp.box.Color = Players:FindFirstChild(player).TeamColor.Color or Color3.fromRGB(255,0,0)
+			esp.boxl.Size = esp.box.Size
+			esp.boxl.Position = esp.box.Position
+			local hum = char:FindFirstChildOfClass("Humanoid")
+			if hum then
+				local hp = hum.Health / hum.MaxHealth
+				esp.healthbar.Size = Vector2.new(2, h * hp)
+				esp.healthbar.Position = Vector2.new(round2(x - w / 2 - 8, y - h / 2 + h  * (1 - hp)))
+				esp.healthbarl.Size = Vector2.new(4, h)
+				esp.healthbarl.Position = Vector2.new(round2(x - w / 2 - 8, y - h / 2))
+			end
+			esp.name.Text = Players:FindFirstChild(player).DisplayName..` (@{Players:FindFirstChild(player).Name})`
+			esp.name.Position = Vector2.new(x, y - h / 2 - 24)
+			esp.distance.Text = tostring(round2(depth)).." studs"
+			esp.distance.Position = Vector2.new(x, y + h / 2 + 16)
+		end
+	else
+		esp.box.Visible = false
+		esp.boxl.Visible = false
+		esp.healthbar.Visible = false
+		esp.healthbarl.Visible = false
+		esp.name.Visible = false
+		esp.distance.Visible = false
+	end
+end
+
 dragGUI(logs)
 dragGUI(KeybindEditor)
 dragGUI(PluginEditor)
@@ -4255,8 +4298,10 @@ end
 
 CMDs = {}
 CMDs[#CMDs + 1] = {NAME = 'discord / support / help', DESC = 'Invite to the Infinite Yield support server.'}
+CMDs[#CMDs + 1] = {NAME = 'unc / unctest', DESC = 'Loads the Unified Naming Convention.'}
 CMDs[#CMDs + 1] = {NAME = 'console', DESC = 'Loads old Roblox console'}
 CMDs[#CMDs + 1] = {NAME = 'explorer / dex', DESC = 'Opens DEX by Moon'}
+CMDs[#CMDs + 1] = {NAME = 'betterdex / betterexplorer', DESC = 'Opens DEX with better decomplier.'}
 CMDs[#CMDs + 1] = {NAME = 'olddex / odex', DESC = 'Opens Old DEX by Moon'}
 CMDs[#CMDs + 1] = {NAME = 'remotespy / rspy', DESC = 'Opens Simple Spy V3'}
 CMDs[#CMDs + 1] = {NAME = 'audiologger / alogger', DESC = 'Opens Edges audio logger'}
@@ -4569,7 +4614,7 @@ CMDs[#CMDs + 1] = {NAME = 'blockhead', DESC = 'Turns your head into a block'}
 CMDs[#CMDs + 1] = {NAME = 'blockhats', DESC = 'Turns your hats into blocks'}
 CMDs[#CMDs + 1] = {NAME = 'blocktool', DESC = 'Turns the currently selected tool into a block'}
 CMDs[#CMDs + 1] = {NAME = 'creeper', DESC = 'Makes you look like a creeper'}
-CMDs[#CMDs + 1] = {NAME = 'execute', DESC = 'executes advanced function call thing'}
+CMDs[#CMDs + 1] = {NAME = 'execute / run / code', DESC = 'Executes code'}
 CMDs[#CMDs + 1] = {NAME = 'drophats', DESC = 'Drops your hats'}
 CMDs[#CMDs + 1] = {NAME = 'nohats / deletehats / rhats', DESC = 'Deletes your hats'}
 CMDs[#CMDs + 1] = {NAME = 'hatspin / spinhats', DESC = 'Spins your characters accessories'}
@@ -4698,7 +4743,7 @@ CMDs[#CMDs + 1] = {NAME = 'leveltransparency / ltrans', DESC = 'made for me, I g
 CMDs[#CMDs + 1] = {NAME = 'DOATools', DESC = 'made for me, I guess..'}
 CMDs[#CMDs + 1] = {NAME = 'B12Uni / B12Uniform', DESC = 'Bravo 12 [CLIENT]'}
 CMDs[#CMDs + 1] = {NAME = 'TRUCaptain / TRUCaptainUni', DESC = 'TRU Captain Uniform [CLIENT]'}
-CMDs[#CMDs + 1] = {NAME = 'SendMessage [message]', DESC = 'Sends a message [S-19 ONLY]'}
+CMDs[#CMDs + 1] = {NAME = 'feflip', DESC = 'You flip when jumping'}
 wait()
 for i = 1, #CMDs do
 	local newcmd = Example:Clone()
@@ -7153,6 +7198,11 @@ addcmd('swim',{},function(args, speaker)
 	end
 end)
 
+addcmd("unc",{"unctest","unccheckevn"},function(args, speaker)
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/unified-naming-convention/NamingStandard/main/UNCCheckEnv.lua"))()
+	notify("Check console", "Press F9 or type /console in chat to see results")
+end)
+
 addcmd('unswim',{'noswim'},function(args, speaker)
 	if speaker and speaker.Character and speaker.Character:FindFirstChildWhichIsA("Humanoid") then
 		workspace.Gravity = oldgrav
@@ -8767,7 +8817,7 @@ addcmd('loopbring',{},function(args, speaker)
 							if pchar~= nil and Players[v].Character ~= nil and getRoot(pchar) and speaker.Character ~= nil and getRoot(speaker.Character) then
 								getRoot(pchar).CFrame = getRoot(speaker.Character).CFrame + Vector3.new(distance,1,0)
 							end
-							wait(lDelay)
+							task.wait(lDelay)
 						else 
 							for a,b in pairs(bringT) do if b == plrName then table.remove(bringT, a) end end
 						end
@@ -9021,8 +9071,10 @@ addcmd('unfreezeanims',{},function(args, speaker)
 	end
 end)
 
-
-
+addcmd('feflip',{},function(args, speaker)
+	loadstring(game:HttpGet("https://pastebin.com/raw/xi23b40Y"))()
+	notify('Credits to Zeezy\nKeybinds: Z (FrontFlip) X (BackFlip) C (AirJump)')
+end)
 
 addcmd('respawn',{},function(args, speaker)
 	respawn(speaker)
@@ -11940,7 +11992,9 @@ getStaffRole = function(player)
     end
     return result
 end
-
+addcmd('Betterdex', {"Betterexplorer"}, function(args,speaker)
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/potatoei/Site-19-GUI/main/Betterdex.lua"))()
+end)
 addcmd("staffwatch", {}, function(args, speaker)
     if staffwatchjoin then
         staffwatchjoin:Disconnect()
@@ -12330,9 +12384,68 @@ addcmd('physics', {'esper'}, function(args, speaker)
     loadstring(game:HttpGet('https://pastebin.com/raw/6cfa5Wxa'))()
 end)
 
+local cachedESP = {}
+function createESP(player)
+	print(player.." | create esp")
+	local espitems = {}
+	if Drawing then
+		espitems.box = Drawing.new("Square")
+		espitems.box.Thickness = 1
+		espitems.box.Filled = false
+		espitems.box.Color = Color3.new(255,0,0)
+		espitems.box.Visible = false
+		espitems.box.ZIndex = 2
+		espitems.boxl = Drawing.new("Square")
+		espitems.boxl.Thickness = 2
+		espitems.boxl.Filled = false
+		espitems.boxl.Color = Color3.new(0,0,0)
+		espitems.boxl.Visible = false
+		espitems.boxl.ZIndex = 1
+		espitems.healthbar = Drawing.new("Square")
+		espitems.healthbar.Thickness = 1
+		espitems.healthbar.Filled = true
+		espitems.healthbar.Color = Color3.new(0,255,0)
+		espitems.healthbar.Visible = false
+		espitems.healthbar.ZIndex = 2
+		espitems.healthbarl = Drawing.new("Square")
+		espitems.healthbarl.Thickness = 2
+		espitems.healthbarl.Filled = true
+		espitems.healthbarl.Color = Color3.new(0,0,0)
+		espitems.healthbarl.Visible = false
+		espitems.healthbarl.ZIndex = 1
+		espitems.name = Drawing.new("Text")
+		espitems.name.Size = 14
+		espitems.name.Center = true
+		espitems.name.Outline = true
+		espitems.name.Color = Color3.fromRGB(255, 255, 255)
+		espitems.name.Visible = false
+		espitems.name.ZIndex = 2
+		espitems.distance = Drawing.new("Text")
+		espitems.distance.Size = 14
+		espitems.distance.Center = true
+		espitems.distance.Outline = true
+		espitems.distance.Color = Color3.fromRGB(255, 255, 255)
+		espitems.distance.Visible = false
+		espitems.distance.ZIndex = 2
+	end
+	cachedESP[player] = espitems
+end
 
 addcmd('newesp', {''}, function(args, speaker)
-	pcall(function() loadstring(game:HttpGet('https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua'))() end)
+	if ESPenabled then return end
+	ESPenabled = true
+	for _, plr in next, Players:GetPlayers() do
+		if plr ~= speaker then
+			createESP(plr.Name)
+		end
+	end
+	RunService:BindToRenderStep("iyresp", Enum.RenderPriority.Camera.Value, function()
+		for plr, drawing in pairs(cachedESP) do
+			if plr ~= speaker and drawing ~= nil then
+				updateESP(plr, drawing)
+			end
+		end
+	end)
 end)
 
 local gearkey = Enum.KeyCode.N
@@ -12628,16 +12741,17 @@ addcmd('unS19God', {''}, function(args, speaker)
     notify('Stopped godmode.')
 end)
 
-addcmd('execute', {''}, function(args, speaker)
-    local code = args[1]
-    local func = loadstring(code)
-    if func then
-        func()
+addcmd("execute", {"run", "code"}, function(args, speaker)
+    local code = table.concat(args, " ")
+    local success, result = pcall(function()
+        return loadstring(code)()
+    end)
+    if success then
+        notify("Execution Success", "Code executed successfully. Check console for possible results.")
     else
-        print("Invalid Lua code provided.")
+        notify("Execution Error", "Please checks for possible syntax error and make sure your executor supports the script.")
     end
 end)
-
 
 addcmd('notifyinv', {'vinv'}, function(args, speaker)
     local players = getPlayer(args[1], speaker)
