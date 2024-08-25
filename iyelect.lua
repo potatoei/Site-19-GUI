@@ -13,7 +13,7 @@ if not game:IsLoaded() then
     game.Loaded:Wait()
 end
 
-currentVersion = '6.01'
+currentVersion = '6.03'
 
 Players = game:GetService("Players")
 
@@ -205,7 +205,7 @@ Title.BorderSizePixel = 0
 Title.Size = UDim2.new(0, 250, 0, 20)
 Title.Font = Enum.Font.SourceSans
 Title.TextSize = 18
-Title.Text = "Infinite Yield FE v" .. currentVersion
+Title.Text = "Infinite Yield FE " .. currentVersion
 
 do
 	local emoji = ({
@@ -240,7 +240,7 @@ Title.ZIndex = 10
 table.insert(shade1,Title)
 table.insert(text1,Title)
 
-local Titles = {"Infinite Yield FE v"}
+local Titles = {"Infinite Yield FE"}
 local Images = {"11688231017", "11339922083", "11914981726", "5783845592", "6762179979", "7846015915", "11171958623", "11308149650", "7444547410", "6093472109"}
 
 Title.Text = Titles[math.random(1, #Titles)] .. " v" .. currentVersion
