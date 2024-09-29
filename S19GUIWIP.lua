@@ -1,12 +1,11 @@
 --[[
-	Updated last on 08/03/2024
-	Okay so, I finally managed to figure it out, I completely fixed the rewrite and everything should be working.
-
+	Updated last on 09/29/2024
+	Checks if alive before bringing
 ]]
-
+--s19guiv2
 local pickups = workspace.Ignore.Pickups
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/potatoei/Site-19-GUI/main/GUI%20BACKUP.lua"))()
-local Forums = Library.new("Site 19 GUI v2")
+local Forums = Library.new("SCP Site-19 Roleplay GUI")
 print('----------------\nPLEASE DO NOT SPAM THE BUTTONS!\n----------------')
 local sections = {
     M16 = "M16",--o
@@ -38,7 +37,7 @@ local items = {
     { section = sections.shield, name = 'Shield' },
     { section = sections.keycha, name = 'Keychains' },
     { section = sections.keyca, name = 'Keycards' },
-    { section = sections.G22, name = "Glock22" },
+    { section = sections.G22, name = "Glock 22" },
     { section = sections.brush, name = "Brush" },
     { section = sections.vest, name = "Vest" },
     { section = sections.med, name = "Medkit" },
@@ -50,17 +49,34 @@ for i, v in pairs(items) do
     main:NewButton(v.section, function()
         local children = pickups[v.name]:GetChildren()
         if #children > 0 then
-            local randomChild = children[math.random(1, #children)]
-            local previous = randomChild.CFrame
-            wait(0.1)
-            print('Previous for' .. randomChild.Parent.Name, randomChild.CFrame)
-            task.wait(0.1)
-            randomChild.CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
-            wait(5)
-            randomChild.CFrame = previous
+            local foundAlive = false
+            for _, randomChild in pairs(children) do
+                if randomChild:FindFirstChild("Config") and randomChild.Config:FindFirstChild("Alive") then
+                    if randomChild.Config.Alive.Value == true then
+                        foundAlive = true
+                        local previous = randomChild.CFrame
+                        wait(0.1)
+                        print('Previous for ' .. randomChild.Parent.Name, randomChild.CFrame)
+                        task.wait(0.1)
+                        randomChild.CFrame = speaker.Character.HumanoidRootPart.CFrame + u1
+                        wait(5)
+                        randomChild.CFrame = previous
+                        break
+                    end
+                else
+                    print("No Alive configuration for item: " .. v.name)
+                end
+            end
+            
+            if not foundAlive then
+                print("No alive items found for: " .. v.name)
+            end
+        else
+            print("No children found for: " .. v.name)
         end
     end)
 end
+
 main:NewButton('Special 330 (TAKE TWO)', function() 
     local specchild = workspace.SCP["330"].Pickup
     local specprev = specchild.CFrame
@@ -70,3 +86,4 @@ main:NewButton('Special 330 (TAKE TWO)', function()
     wait(5)
     specchild.CFrame = specprev
 end)
+
