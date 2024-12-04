@@ -1,3 +1,4 @@
+-- deprecated, please dont use it unless u want to modify :)
 getgenv().toggle = false
 
 local gui = Instance.new("ScreenGui")
