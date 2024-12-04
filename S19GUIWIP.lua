@@ -5,7 +5,7 @@
 --s19guiv2.03
 local pickups = workspace.Ignore.Pickups
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/potatoei/Site-19-GUI/main/GUI%20BACKUP.lua"))()
-local Forums = Library.new("SCP Site-19 Roleplay GUI v2.02")
+local Forums = Library.new("SCP Site-19 Roleplay GUI v2.03")
 print('----------------\nPLEASE DO NOT SPAM THE BUTTONS!\n----------------')
 local sections = {
     M16 = "M16",--o
