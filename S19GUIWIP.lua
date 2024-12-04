@@ -1,15 +1,15 @@
 --[[
-	Updated last on 09/29/2024
-	Checks if alive before bringing
+	Updated last on 12/3/24
+	Fixed Glock-22, i think?
 ]]
 --s19guiv2
 local pickups = workspace.Ignore.Pickups
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/potatoei/Site-19-GUI/main/GUI%20BACKUP.lua"))()
-local Forums = Library.new("SCP Site-19 Roleplay GUI")
+local Forums = Library.new("SCP Site-19 Roleplay GUI v2.01")
 print('----------------\nPLEASE DO NOT SPAM THE BUTTONS!\n----------------')
 local sections = {
     M16 = "M16",--o
-    G22 = "Glock 22",--o
+    G22 = "Glock-22",--o
     med = "Medkit",--o
     rado = "Radio",--o
     shield = "Riot Shields",
@@ -86,4 +86,3 @@ main:NewButton('Special 330 (TAKE TWO)', function()
     wait(5)
     specchild.CFrame = specprev
 end)
-
