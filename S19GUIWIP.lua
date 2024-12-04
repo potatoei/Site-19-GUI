@@ -1,15 +1,15 @@
 --[[
 	Updated last on 12/3/24
-	Fixed Glock22, confirmed
+	Fixed Glock22, not confirmed the last round, i see where i went wrong.
 ]]
---s19guiv2.02
+--s19guiv2.03
 local pickups = workspace.Ignore.Pickups
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/potatoei/Site-19-GUI/main/GUI%20BACKUP.lua"))()
 local Forums = Library.new("SCP Site-19 Roleplay GUI v2.02")
 print('----------------\nPLEASE DO NOT SPAM THE BUTTONS!\n----------------')
 local sections = {
     M16 = "M16",--o
-    G22 = "Glock22",--ok i might be stupid
+    G22 = "Glock 22",--ok i might be stupid
     med = "Medkit",--o
     rado = "Radio",--o
     shield = "Riot Shields",
@@ -37,7 +37,7 @@ local items = {
     { section = sections.shield, name = 'Shield' },
     { section = sections.keycha, name = 'Keychains' },
     { section = sections.keyca, name = 'Keycards' },
-    { section = sections.G22, name = "Glock 22" },
+    { section = sections.G22, name = "Glock22" },
     { section = sections.brush, name = "Brush" },
     { section = sections.vest, name = "Vest" },
     { section = sections.med, name = "Medkit" },
