@@ -4672,7 +4672,7 @@ CMDs[#CMDs + 1] = {NAME = '1048HP', DESC = 'Shows 1048 HP'}
 CMDs[#CMDs + 1] = {NAME = '096HP', DESC = 'Shows 096 HP'}
 CMDs[#CMDs + 1] = {NAME = '173HP', DESC = 'Shows 173 Body Health'}
 CMDs[#CMDs + 1] = {NAME = '682HP', DESC = 'Shows 682 HP'}
-CMDs[#CMDs + 1] = {NAME = 'physics / esper', DESC = 'Grabs a physics gun'}
+CMDs[#CMDs + 1] = {NAME = 'physics / ', DESC = 'Grabs a physics gun'}
 CMDs[#CMDs + 1] = {NAME = 'newesp', DESC = 'Loads new esp from IY Reborn (Needs Drawing)'}
 CMDs[#CMDs + 1] = {NAME = 'unnewesp', DESC = 'Removes new esp from IY Reborn'}
 CMDs[#CMDs + 1] = {NAME = 'GearVision / NightVision', DESC = 'Makes you have Gear Vision'}
@@ -12339,7 +12339,7 @@ end)
 
 addcmd('physics', {'esper'}, function(args, speaker)
     notify('Loading, wait a few seconds.')
-    loadstring(game:HttpGet('https://pastebin.com/raw/6cfa5Wxa'))()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/potatoei/universal/refs/heads/main/physics%20gun'))() -- last one got deleted
 end)
 
 
